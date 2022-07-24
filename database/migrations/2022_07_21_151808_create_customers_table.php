@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('full_name');
             $table->string('designation');
             $table->string('company_type_id');
             $table->string('company_name')->unique();

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->integer('conversation_id');
             $table->integer('sender');
             $table->integer('receiver');
             $table->string('message');
