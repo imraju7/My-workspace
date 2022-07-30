@@ -5,13 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @csrf
-    <title>{{ $pageTitle }}</title>
+    <title>{{ $data['pageTitle'] }}</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+    <link rel="stylesheet" href="{{ asset('auth/app.css') }}">
 </head>
 
 <body>
@@ -19,7 +17,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <img src="{{ asset($logo) }}" width="75px" height="50px" />
+                    <img src="{{ asset($data['logo']) }}" width="75px" height="50px" />
                 </a>
             </div>
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
@@ -66,6 +64,7 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('auth/app.js') }}"></script>
 </body>
 
 </html>

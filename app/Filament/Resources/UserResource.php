@@ -37,7 +37,8 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+                    ->dehydrateStateUsing(fn ($state) => bcrypt($state))
+                    ->hiddenOn([Pages\EditUser::class, Pages\ViewUser::class]),
                 Forms\Components\Toggle::make('is_banned')
                     ->required(),
             ]);
@@ -78,7 +79,6 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }

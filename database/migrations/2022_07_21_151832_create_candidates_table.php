@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->boolean('is_recruited')->default(false);
             $table->integer('recruited_by')->nullable();
             $table->timestamps();

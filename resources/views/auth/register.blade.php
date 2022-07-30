@@ -32,17 +32,24 @@
                         </ul>
                     </div>
                 @endif
-                @if (session('loginError'))
+                @if (session('registerError'))
                     <div class="mb-4">
                         <div class="font-medium text-red-600">{{ __('Whoops! Something went wrong.') }}</div>
                         <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-                            <li> {{ session('loginError') }}</li>
+                            <li> {{ session('registerError') }}</li>
                         </ul>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div>
+                    <div class="mt-4">
+                        <label class="block font-medium text-sm text-gray-700" for="name">
+                            Full Name
+                        </label>
+                        <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="name" type="text"
+                            name="name" value="{{ old('name') }}" placeholder="Your Full Name" autofocus="autofocus">
+                    </div>
+                    <div class="mt-4">
                         <label class="block font-medium text-sm text-gray-700" for="email">
                             Email
                         </label>
@@ -50,11 +57,27 @@
                             name="email" value="{{ old('email') }}" placeholder="Your Email" autofocus="autofocus">
                     </div>
                     <div class="mt-4">
+                        <label for="role" class="block font-medium text-sm text-gray-70">Register as:</label>
+                        <select id="roles" name="role" class="form-input rounded-md shadow-sm block mt-1 w-full">
+                            <option selected value="customer">Employer (Post a
+                                Job)</option>
+                            <option value="candidate">Employee (Find a
+                                Job)</option>
+                        </select>
+                    </div>
+                    <div class="mt-4">
                         <label class="block font-medium text-sm text-gray-700" for="password">
                             Password
                         </label>
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password" type="password"
                             name="password" autocomplete="current-password">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block font-medium text-sm text-gray-700" for="password_confirmation">
+                            Password Confirmation
+                        </label>
+                        <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password_confirmation"
+                            type="password" name="password_confirmation" autocomplete="current-password">
                     </div>
                     <div class="block mt-4">
                         <label for="remember_me" class="flex items-center">
@@ -64,16 +87,12 @@
                     </div>
                     <div class="flex items-center justify-end mt-4">
                         <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"
-                            href="{{ route('register') }}">
-                            Register ?
-                        </a>
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                            href="{{ route('forgot-password') }}">
-                            Forgot your password?
+                            href="{{ route('login') }}">
+                            Have an account, Login?
                         </a>
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                            Login
+                            Register
                         </button>
                     </div>
                 </form>
