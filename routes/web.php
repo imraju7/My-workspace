@@ -20,21 +20,16 @@ Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name(
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('kyc-verification-1', [KycController::class, 'customer_index'])->name('customer.kyc');
+    Route::get('kyc-verification-2', [KycController::class, 'candidate_index'])->name('candidate.kyc');
 
     Route::middleware([HasVerifiedKyc::class])->group(function () {
         // Application Routes       
+        Route::get('/', [HomeController::class, 'index'])->name('homepage');
+        Route::get('contact-us', [HomeController::class, 'index'])->name('contact');
+        Route::get('about-us', [HomeController::class, 'index'])->name('about');
         Route::get('post-a-job', [HomeController::class, 'index'])->name('jobs.post');
-        Route::get('kyc', [KycController::class, 'index'])->name('kyc');
-        Route::post('kyc', [KycController::class, 'store']);
+        Route::get('jobs', [HomeController::class, 'index'])->name('jobs');
+        Route::get('jobs/{slug}', [HomeController::class, 'index'])->name('jobs.detail');
     });
 });
-
-Route::get('/', [HomeController::class, 'index'])->name('homepage');
-
-Route::get('jobs', [HomeController::class, 'index'])->name('jobs');
-
-Route::get('jobs/{slug}', [HomeController::class, 'index'])->name('jobs.detail');
-
-Route::get('contact-us', [HomeController::class, 'index'])->name('contact');
-
-Route::get('about-us', [HomeController::class, 'index'])->name('about');

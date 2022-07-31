@@ -4,12 +4,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? 'Title' }}</title>
     @include('email.style')
 </head>
 
 <body>
-    <span class="preheader">{{ $preHeaderText }}</span>
+    <span class="preheader">{{ $preHeaderText ?? 'header text' }}</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
         <tr>
             <td>&nbsp;</td>
@@ -37,8 +37,8 @@
                                                                 cellspacing="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td> <a href="{{ $route }}"
-                                                                                target="_blank">{{ $LinkText }}</a>
+                                                                        <td> <a href="{{ $route ?? '/' }}"
+                                                                                target="_blank">{{ $LinkText ?? 'Link' }}</a>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>

@@ -50,7 +50,7 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('role_id'),
+                Tables\Columns\TextColumn::make('role.name')->label('Role'),
                 Tables\Columns\BooleanColumn::make('is_banned'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

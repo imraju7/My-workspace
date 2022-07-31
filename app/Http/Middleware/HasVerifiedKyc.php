@@ -16,8 +16,17 @@ class HasVerifiedKyc
      */
     public function handle(Request $request, Closure $next)
     {
-        $profile = auth()->user()->role;
-        dd($profile);
+        $user = auth()->user()->load(['role']);
+        if ($user->role->name == 'customer') {
+            if (!$user->customer) {
+                return redirect()->route('customer.kyc');
+            }
+        }
+        if ($user->role->name == 'candidate') {
+            if (!$user->candidate) {
+                return redirect()->route('candidate.kyc');
+            }
+        }
         return $next($request);
     }
 }
