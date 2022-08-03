@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->boolean('is_vacant');
-            $table->enum('job_type',['remote','office'])->default('office');
+            $table->enum('job_type', ['full-time', 'part-time', 'casual', 'contract'])->default('full-time');
             $table->timestamp('expires_on');
             $table->integer('views')->default(0);
             $table->timestamps();

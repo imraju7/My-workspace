@@ -34,4 +34,10 @@ class LoginController extends Controller
         }
         return redirect("login")->with('loginError', 'Opps! You have entered invalid credentials');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('homepage');
+    }
 }

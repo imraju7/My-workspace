@@ -55,17 +55,13 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id'),
+                Tables\Columns\TextColumn::make('user.name')->label('Name'),
                 Tables\Columns\TextColumn::make('designation'),
-                Tables\Columns\TextColumn::make('company_type_id'),
                 Tables\Columns\TextColumn::make('company_name'),
-                Tables\Columns\TextColumn::make('company_description'),
                 Tables\Columns\TextColumn::make('company_phone'),
                 Tables\Columns\TextColumn::make('company_email'),
                 Tables\Columns\TextColumn::make('company_address'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
@@ -73,7 +69,6 @@ class CustomerResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -91,9 +86,9 @@ class CustomerResource extends Resource
     {
         return [
             'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'view' => Pages\ViewCustomer::route('/{record}'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            // 'create' => Pages\CreateCustomer::route('/create'),
+            // 'view' => Pages\ViewCustomer::route('/{record}'),
+            // 'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
     }    
 }

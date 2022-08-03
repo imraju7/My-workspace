@@ -17,16 +17,16 @@ class Candidate extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function recruiter()
     {
-        $this->belongsTo(Customer::class, 'id', 'recruited_by');
+        return $this->belongsTo(Customer::class, 'recruited_by', 'id');
     }
 
     public function application()
     {
-        $this->hasMany(Application::class, 'user_id', 'user_id');
+        return $this->hasMany(Application::class, 'user_id', 'user_id');
     }
 }

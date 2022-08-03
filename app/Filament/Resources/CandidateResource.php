@@ -38,21 +38,15 @@ class CandidateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id'),
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\BooleanColumn::make('is_recruited'),
-                Tables\Columns\TextColumn::make('recruited_by'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\BooleanColumn::make('is_recruited')->label('Has Job'),
+                Tables\Columns\TextColumn::make('recruiter')->label('company')
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -70,9 +64,9 @@ class CandidateResource extends Resource
     {
         return [
             'index' => Pages\ListCandidates::route('/'),
-            'create' => Pages\CreateCandidate::route('/create'),
-            'view' => Pages\ViewCandidate::route('/{record}'),
-            'edit' => Pages\EditCandidate::route('/{record}/edit'),
+            // 'create' => Pages\CreateCandidate::route('/create'),
+            // 'view' => Pages\ViewCandidate::route('/{record}'),
+            // 'edit' => Pages\EditCandidate::route('/{record}/edit'),
         ];
     }    
 }

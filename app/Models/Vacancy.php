@@ -17,6 +17,6 @@ class Vacancy extends Model
 
     public function company()
     {
-        return $this->belongsTo(Customer::class, 'id', 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 }

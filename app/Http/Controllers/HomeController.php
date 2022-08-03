@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Setting;
+use App\Models\Vacancy;
 
 class HomeController extends Controller
 {
@@ -13,8 +14,9 @@ class HomeController extends Controller
         $data = [
             'pageTitle' => 'Homepage',
             'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg'
+            'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
+            'vacancies' => Vacancy::count()
         ];
-        return view('about', compact('data'));
+        return view('home', compact('data'));
     }
 }

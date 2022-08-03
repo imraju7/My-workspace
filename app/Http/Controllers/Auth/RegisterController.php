@@ -42,6 +42,6 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user, $remember = true);
-        return redirect()->route('kyc');
+        return redirect()->route('homepage');
     }
 }

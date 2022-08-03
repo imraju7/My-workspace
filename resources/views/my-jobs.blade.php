@@ -8,7 +8,7 @@
                     <div class="row justify-content-center pb-3">
                         <div class="col-md-12 heading-section ftco-animate">
                             <span class="subheading"></span>
-                            <h2 class="mb-4">Available Jobs</h2>
+                            <h2 class="mb-4">Jobs Listed By You</h2>
                         </div>
                     </div>
                     <div class="row">
@@ -18,7 +18,7 @@
                                     <div class="one-third mb-4 mb-md-0">
                                         <div class="job-post-item-header d-flex align-items-center">
                                             <h2 class="mr-3 text-black"><a
-                                                    href="{{ route('jobs.detail', $job->id) }}">{{ $job->title }}</a>
+                                                    href="{{ route('jobs.applicants', $job->id) }}">{{ $job->title }}</a>
                                             </h2>
                                             <div class="badge-wrap">
                                                 <span
@@ -36,11 +36,17 @@
 
                                     <div class="one-forth ml-auto d-flex align-items-center">
                                         <div>
-                                            <a href="{{ route('jobs.detail', $job->id) }}"
+                                            <a href="{{ route('jobs.applicants', $job->id) }}"
                                                 class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                                <span class="icon-eye" title="View"></span>
+                                                <span class="icon-compass" title="View Applications"></span>
                                             </a>
                                         </div>
+                                        <form method="POST" action="{{ route('jobs.delete', $job->id) }}">
+                                            @csrf
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this item?');"
+                                                class="btn btn-primary py-2">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div><!-- end -->
