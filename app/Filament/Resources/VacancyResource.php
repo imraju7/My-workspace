@@ -31,14 +31,18 @@ class VacancyResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('company.user.name')->label('Representative'),
+                Tables\Columns\TextColumn::make('company.company_name')->label('Company'),
+                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('job_type')->label('Job Type'),
+                Tables\Columns\BooleanColumn::make('is_vacant')->label('Is Available'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -56,9 +60,9 @@ class VacancyResource extends Resource
     {
         return [
             'index' => Pages\ListVacancies::route('/'),
-            'create' => Pages\CreateVacancy::route('/create'),
-            'view' => Pages\ViewVacancy::route('/{record}'),
-            'edit' => Pages\EditVacancy::route('/{record}/edit'),
+            // 'create' => Pages\CreateVacancy::route('/create'),
+            // 'view' => Pages\ViewVacancy::route('/{record}'),
+            // 'edit' => Pages\EditVacancy::route('/{record}/edit'),
         ];
     }    
 }

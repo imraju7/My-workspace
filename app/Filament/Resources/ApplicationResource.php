@@ -27,19 +27,19 @@ class ApplicationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')->name('User'),
-                Tables\Columns\TextColumn::make('vacancy_id'),
-                Tables\Columns\TextColumn::make('file'),
+                Tables\Columns\TextColumn::make('user.name')->label('User'),
+                Tables\Columns\TextColumn::make('vacancy.title')->label('Job'),
+                Tables\Columns\TextColumn::make('vacancy.company.company_name')->label('Company'),
+                Tables\Columns\TextColumn::make('file')->label('CV')
+                    ->url(fn (Application $record): string => route('jobs.applicants.download', ['id' => $record->id])),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -59,7 +59,7 @@ class ApplicationResource extends Resource
             'index' => Pages\ListApplications::route('/'),
             // 'create' => Pages\CreateApplication::route('/create'),
             // 'edit' => Pages\EditApplication::route('/{record}/edit'),
-            'view' => Pages\ViewApplication::route('/{record}'),
+            // 'view' => Pages\ViewApplication::route('/{record}'),
         ];
     }
 }

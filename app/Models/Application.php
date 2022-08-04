@@ -22,6 +22,6 @@ class Application extends Model
 
     public function vacancy()
     {
-        return $this->belongsTo(Vacancy::class, 'id', 'vacancy_id');
+        return $this->belongsTo(Vacancy::class, 'vacancy_id', 'id');
     }
 }

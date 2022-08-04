@@ -38,10 +38,10 @@ class CandidateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('address'),
+                Tables\Columns\TextColumn::make('user.name')->label('Name'),
+                Tables\Columns\TextColumn::make('address')->label('Address'),
                 Tables\Columns\BooleanColumn::make('is_recruited')->label('Has Job'),
-                Tables\Columns\TextColumn::make('recruiter')->label('company')
+                Tables\Columns\TextColumn::make('recruiter.company_name')->label('Company')
             ])
             ->filters([
                 //

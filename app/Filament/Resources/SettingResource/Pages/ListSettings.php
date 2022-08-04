@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SettingResource\Pages;
 use App\Filament\Resources\SettingResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Models\Setting;
 
 class ListSettings extends ListRecords
 {
@@ -12,8 +13,12 @@ class ListSettings extends ListRecords
 
     protected function getActions(): array
     {
-        return [
-            Actions\CreateAction::make(),
-        ];
+        if (Setting::count() == 0) {
+            return [
+                Actions\CreateAction::make(),
+            ];
+        } else {
+            return [];
+        }
     }
 }

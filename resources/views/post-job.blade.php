@@ -95,5 +95,5 @@
         </div>
     </div>
 
-    @include('partials.newsletter')
+    {{-- @include('partials.newsletter') --}}
 @endsection
