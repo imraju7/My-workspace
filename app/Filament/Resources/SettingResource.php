@@ -48,6 +48,8 @@ class SettingResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('footer_text')->label('Footer Text')
+                    ->required(),
+                Forms\Components\Textarea::make('about_text')->label('About Page Text')
                     ->required()
             ]);
     }

@@ -10,6 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Middleware\HasVerifiedKyc;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
 
 // AUthentication Routes
 
@@ -24,6 +26,14 @@ Route::middleware(['guest'])->group(function () {
     Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
 });
 
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
+
+Route::get('contact-us', [ContactController::class, 'index'])->name('contact');
+Route::post('contact-us', [ContactController::class, 'contact']);
+
+Route::get('about-us', [AboutController::class, 'index'])->name('about');
+
+Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -38,10 +48,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware([HasVerifiedKyc::class])->group(function () {
         // Application Routes       
-        Route::get('/', [HomeController::class, 'index'])->name('homepage');
-        Route::get('contact-us', [HomeController::class, 'index'])->name('contact');
-        Route::get('about-us', [HomeController::class, 'index'])->name('about');
-
         //customer profile
         Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
         Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -63,7 +69,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-a-job', [JobController::class, 'store']);
 
         // For candidates and guests to find and view a job
-        Route::get('jobs', [JobController::class, 'index'])->name('jobs');
         Route::get('jobs/{id}', [JobController::class, 'detail'])->name('jobs.detail');
         Route::post('jobs/apply/{id}', [JobController::class, 'apply'])->name('jobs.apply');
     });
