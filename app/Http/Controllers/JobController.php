@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Candidate;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Setting;
@@ -31,7 +32,7 @@ class JobController extends Controller
             'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
             'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
             'job' => $job,
-            'applied' => Application::where('vacancy_id',$job->id)->where('user_id',auth()->user()->id)->first() ? true : false
+            'applied' => Application::where('vacancy_id', $job->id)->where('user_id', auth()->user()->id)->first() ? true : false
         ];
 
         return view('job-detail', compact('data'));
@@ -115,8 +116,28 @@ class JobController extends Controller
             'pageTitle' => 'Applications',
             'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
             'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
-            'applicants' => Application::where('vacancy_id', $vacancy->id)->get()
+            'applicants' => Application::where('vacancy_id', $vacancy->id)->get(),
+            'vacancy' => $vacancy
         ];
         return view('job-applicants', compact('data'));
+    }
+
+    public function download_cv($id)
+    {
+        $application = Application::findOrFail($id);
+        return response()->download(public_path('uploads/' . $application->file));
+    }
+
+    public function hire($id)
+    {
+        $applicant = Application::findOrFail($id);
+        $vacancy = Vacancy::find($applicant->vacancy_id);
+        $vacancy->is_vacant = false;
+        $vacancy->save();
+        $candidate = Candidate::find($applicant->user->candidate->id);
+        $candidate->is_recruited = true;
+        $candidate->recruited_by = $vacancy->customer_id;
+        $candidate->save();
+        return redirect()->back()->with('success','Hired !');
     }
 }

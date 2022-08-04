@@ -44,12 +44,22 @@ Route::middleware(['auth'])->group(function () {
 
         //customer profile
         Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
+        Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('profile/password-reset', [ProfileController::class, 'resetpassword'])->name('profile.resetpassword');
 
         // for companies to post and manage jobs and applicants
         Route::get('my-jobs', [JobController::class, 'myjobs'])->name('my-jobs');
+
         Route::post('jobs/delete/{id}', [JobController::class, 'delete'])->name('jobs.delete');
+
         Route::get('jobs/{id}/applicants', [JobController::class, 'applicants'])->name('jobs.applicants');
+
+        Route::get('jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
+
+        Route::post('jobs/application/{id}', [JobController::class, 'hire'])->name('jobs.applicants.hire');
+
         Route::get('post-a-job', [JobController::class, 'create'])->name('jobs.post');
+
         Route::post('post-a-job', [JobController::class, 'store']);
 
         // For candidates and guests to find and view a job

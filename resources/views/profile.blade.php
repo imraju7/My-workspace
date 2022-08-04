@@ -6,9 +6,9 @@
                 <div class="col-md-12 col-lg-8 mb-5">
                     <h1>Edit Your Profile</h1>
                     @candidate
-                    <form action="{{ route('profile') }}" method="POST" class="p-5 bg-white">
+                    <form action="{{ route('profile.update') }}" method="POST" class="p-5 bg-white">
                         @csrf
-                        <input type="hidden" name="type" value="candidate">
+                        <input type="hidden" name="user_type" value="candidate">
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="font-weight-bold" for="name">Name</label>
@@ -32,17 +32,28 @@
                         </div>
 
                         <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="font-weight-bold" for="address">Address</label>
+                                <input type="text" id="address" name="address" value="{{ $profile['address'] }}"
+                                    class="form-control">
+                                @error('address')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
                             <div class="col-md-12">
-                                <input type="submit" value="Post" class="btn btn-primary  py-2 px-5">
+                                <input type="submit" value="Update" class="btn btn-primary  py-2 px-5">
                             </div>
                         </div>
                     </form>
                     @endcandidate
 
                     @customer
-                        <form action="{{ route('profile') }}" method="POST" class="p-5 bg-white">
+                        <form action="{{ route('profile.update') }}" method="POST" class="p-5 bg-white">
                             @csrf
-                            <input type="hidden" name="type" value="customer">
+                            <input type="hidden" name="user_type" value="customer">
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
                                     <label class="font-weight-bold" for="name">Name</label>
@@ -126,7 +137,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <input type="submit" value="Post" class="btn btn-primary  py-2 px-5">
+                                    <input type="submit" value="Update" class="btn btn-primary  py-2 px-5">
                                 </div>
                             </div>
                         </form>
@@ -135,38 +146,42 @@
                 <div class="col-lg-4">
                     <div class="p-4 mb-3 bg-white">
                         <h3 class="h5 text-black mb-3">Reset Password</h3>
-                        <form action="{{ route('profile') }}" method="POST" class="p-5 bg-white">
+                        <form action="{{ route('profile.resetpassword') }}" method="POST" class="p-5 bg-white">
+                            @csrf
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
                                     <label class="font-weight-bold" for="password">Old Password</label>
-                                    <input type="text" id="password" name="password" value=""
+                                    <input type="text" id="password" name="password" required value=""
                                         class="form-control" placeholder="Old Password">
                                     @error('password')
                                         <span style="color: red;">{{ $message }}</span>
                                     @enderror
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="font-weight-bold" for="name">New Password</label>
-                                    <input type="text" id="new_password" name="new_password" value=""
-                                        class="form-control" placeholder="New password">
-                                    @error('new_password')
-                                        <span style="color: red;">{{ $message }}</span>
+                                    @if (session('error'))
+                                        <span style="color: red;">{{ session('error') }}</span>
                                     @enderror
-                                </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <input type="submit" value="Reset Password" class="btn btn-primary  py-2 px-5">
-                                </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="font-weight-bold" for="name">New Password</label>
+                                <input type="text" id="new_password" name="new_password" required value=""
+                                    class="form-control" placeholder="New password">
+                                @error('new_password')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="Reset Password" class="btn btn-primary  py-2 px-5">
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    @include('partials.newsletter')
+@include('partials.newsletter')
 @endsection

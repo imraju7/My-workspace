@@ -17,16 +17,11 @@ class Application extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class, 'id', 'user_id');
-    }
-
-    public function candidate()
-    {
-        $this->belongsTo(Candidate::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function vacancy()
     {
-        $this->belongsTo(Vacancy::class, 'id', 'vacancy_id');
+        return $this->belongsTo(Vacancy::class, 'id', 'vacancy_id');
     }
 }
