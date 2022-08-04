@@ -16,8 +16,8 @@ class KycController extends Controller
         $companyTypes = CompanyType::all();
         $data = [
             'pageTitle' => 'kyc',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize'),
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon'),
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
             'companyTypes' => $companyTypes
         ];
         return view('customer-kyc', compact('data'));

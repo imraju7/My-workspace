@@ -12,8 +12,8 @@ class ContactController extends Controller
         $setting = Setting::first();
         $data = [
             'pageTitle' => 'Contact-us',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
             'setting' => $setting
         ];
         return view('contact', compact('data'));

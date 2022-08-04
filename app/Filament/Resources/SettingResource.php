@@ -87,11 +87,9 @@ class SettingResource extends Resource
     {
         $array = [
             'index' => Pages\ListSettings::route('/'),
-            'edit' => Pages\EditSetting::route('/{record}/edit')
+            'edit' => Pages\EditSetting::route('/{record}/edit'),
+            'create' => Pages\CreateSetting::route('/create')
         ];
-        if (Setting::count() == 0) {
-            $array = Arr::add($array, 'create', Pages\CreateSetting::route('/create'));
-        }
         return $array;
     }
 }
