@@ -17,8 +17,8 @@ class RegisterController extends Controller
         $setting = Setting::first();
         $data = [
             'pageTitle' => 'Register',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize'),
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon')
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
         ];
         return view('auth.register', compact('data'));
     }

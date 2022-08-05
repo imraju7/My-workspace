@@ -18,7 +18,8 @@ class JobController extends Controller
             'pageTitle' => 'Available Jobs',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => Vacancy::paginate(5)
+            'jobs' => Vacancy::paginate(5),
+            'setting' => $setting
         ];
         return view('jobs', compact('data'));
     }
@@ -32,6 +33,7 @@ class JobController extends Controller
             'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
             'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
             'job' => $job,
+            'setting' => $setting,
             'applied' => Application::where('vacancy_id', $job->id)->where('user_id', auth()->user()->id)->first() ? true : false
         ];
 
@@ -64,7 +66,8 @@ class JobController extends Controller
             'pageTitle' => 'My Jobs',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5)
+            'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5),
+            'setting' => $setting
         ];
         return view('my-jobs', compact('data'));
     }

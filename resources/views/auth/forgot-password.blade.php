@@ -32,14 +32,6 @@
                         </ul>
                     </div>
                 @endif
-                @if (session('loginError'))
-                    <div class="mb-4">
-                        <div class="font-medium text-red-600">{{ __('Whoops! Something went wrong.') }}</div>
-                        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-                            <li> {{ session('loginError') }}</li>
-                        </ul>
-                    </div>
-                @endif
                 @if (session('success'))
                     <div class="mb-4">
                         <ul class="mt-3 list-disc list-inside text-sm text-green-600">
@@ -47,7 +39,7 @@
                         </ul>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('forgot.password.post') }}">
                     @csrf
                     <div>
                         <label class="block font-medium text-sm text-gray-700" for="email">
@@ -56,31 +48,10 @@
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="email" type="email"
                             name="email" value="{{ old('email') }}" placeholder="Your Email" autofocus="autofocus">
                     </div>
-                    <div class="mt-4">
-                        <label class="block font-medium text-sm text-gray-700" for="password">
-                            Password
-                        </label>
-                        <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password" type="password"
-                            name="password" autocomplete="current-password">
-                    </div>
-                    <div class="block mt-4">
-                        <label for="remember_me" class="flex items-center">
-                            <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                        </label>
-                    </div>
                     <div class="flex items-center justify-end mt-4">
-                        <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"
-                            href="{{ route('register') }}">
-                            Register ?
-                        </a>
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                            href="{{ route('forgot.password.get') }}">
-                            Forgot your password?
-                        </a>
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                            Login
+                            Send Password Reset Link
                         </button>
                     </div>
                 </form>

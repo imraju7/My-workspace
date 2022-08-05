@@ -16,6 +16,7 @@ class AboutController extends Controller
             'about_text' => $setting->about_text ?? 'About',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+            'setting' => $setting
         ];
         return view('about', compact('data'));
     }

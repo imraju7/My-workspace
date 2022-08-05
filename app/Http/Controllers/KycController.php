@@ -18,7 +18,8 @@ class KycController extends Controller
             'pageTitle' => 'kyc',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'companyTypes' => $companyTypes
+            'companyTypes' => $companyTypes,
+            'setting' => $setting
         ];
         return view('customer-kyc', compact('data'));
     }
@@ -57,7 +58,8 @@ class KycController extends Controller
             'pageTitle' => 'kyc',
             'logo' => $setting->getFirstMedia()->getUrl('logosize'),
             'favicon' => $setting->getFirstMedia()->getUrl('favicon'),
-            'companyTypes' => $companyTypes
+            'companyTypes' => $companyTypes,
+            'setting' => $setting
         ];
         return view('candidate-kyc', compact('data'));
     }

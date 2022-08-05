@@ -21,6 +21,7 @@ class ProfileController extends Controller
             'pageTitle' => 'Profile',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+            'setting' => $setting
         ];
         if ($user->role->name == 'customer') {
             $profile = [

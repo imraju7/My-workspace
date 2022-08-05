@@ -15,8 +15,8 @@ class LoginController extends Controller
         $setting = Setting::first();
         $data = [
             'pageTitle' => 'Login',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize'),
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon')
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
         ];
         return view('auth.login', compact('data'));
     }
