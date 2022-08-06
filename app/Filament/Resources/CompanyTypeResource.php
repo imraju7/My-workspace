@@ -44,19 +44,21 @@ class CompanyTypeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn (CompanyType $record): bool => $record->company()->exists()),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -64,5 +66,5 @@ class CompanyTypeResource extends Resource
             'create' => Pages\CreateCompanyType::route('/create'),
             'edit' => Pages\EditCompanyType::route('/{record}/edit'),
         ];
-    }    
+    }
 }

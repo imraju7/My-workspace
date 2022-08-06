@@ -12,13 +12,39 @@ use App\Http\Middleware\HasVerifiedKyc;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
-// AUthentication Routes
+// Email verification Routes
+
+Route::get('/email/verify', function () {
+    if (!auth()->user()->hasVerifiedEmail()) {
+        return view('auth.verify-email');
+    }
+    return redirect()->route('homepage');
+})->middleware('auth')->name('verification.notice');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+
+    $request->fulfill();
+
+    if (auth()->user()->role->name == 'candidate') {
+        return redirect()->route('homepage')->with('success', 'Enjoy the application crafted beautifully just for you 😉');
+    }
+
+    return redirect()->route('my-jobs')->with('success', 'Enjoy the application crafted beautifully just for you. Verify the KYC first though.');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::middleware(['guest'])->group(function () {
     // routes that require user to be authenticated
     Route::get('login', [LoginController::class, 'index'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
+    Route::post('login', [LoginController::class, 'login'])->middleware("throttle:3,1");
 
     Route::get('register', [RegisterController::class, 'index'])->name('register');
     Route::post('register', [RegisterController::class, 'register']);
@@ -37,8 +63,10 @@ Route::post('contact-us', [ContactController::class, 'contact']);
 Route::get('about-us', [AboutController::class, 'index'])->name('about');
 
 Route::get('jobs', [JobController::class, 'index'])->name('jobs');
+Route::get('jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
-Route::middleware(['auth'])->group(function () {
+
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -59,22 +87,31 @@ Route::middleware(['auth'])->group(function () {
         // for companies to post and manage jobs and applicants
         Route::get('my-jobs', [JobController::class, 'myjobs'])->name('my-jobs');
 
-        Route::post('jobs/delete/{id}', [JobController::class, 'delete'])->name('jobs.delete');
+        Route::post('my-jobs/delete/{id}', [JobController::class, 'delete'])->name('jobs.delete');
 
-        Route::get('jobs/{id}/applicants', [JobController::class, 'applicants'])->name('jobs.applicants');
+        Route::get('my-jobs/{id}/applicants', [JobController::class, 'applicants'])->name('jobs.applicants');
 
-        Route::get('jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
+        Route::get('my-jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
 
-        Route::post('jobs/application/{id}', [JobController::class, 'hire'])->name('jobs.applicants.hire');
+        Route::post('my-jobs/application/{id}', [JobController::class, 'hire'])->name('jobs.applicants.hire');
 
-        Route::get('post-a-job', [JobController::class, 'create'])->name('jobs.post');
+        Route::get('my-jobs/post-a-job', [JobController::class, 'create'])->name('jobs.post');
 
-        Route::post('post-a-job', [JobController::class, 'store']);
+        Route::post('my-jobs/post-a-job', [JobController::class, 'store']);
+
+        Route::get('my-jobs/edit-a-job/{id}', [JobController::class, 'edit'])->name('jobs.edit');
+
+        Route::post('my-jobs/edit-a-job/{id}', [JobController::class, 'update']);
 
         // For candidates and guests to find and view a job
         Route::get('jobs/{id}', [JobController::class, 'detail'])->name('jobs.detail');
         Route::post('jobs/apply/{id}', [JobController::class, 'apply'])->name('jobs.apply');
+
+        // messaging
+        Route::get('jobs/{job_id}/message/{applicant_id}', [JobController::class, 'download_cv'])->name('jobs.applicants.message');
     });
 });
 
 Route::post('subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+
+Route::get('test', [SubscriptionController::class, 'test']);

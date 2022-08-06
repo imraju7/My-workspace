@@ -8251,6 +8251,31 @@ h1, h2, h3, h4, h5,
       color: #fff;
       background: #6c63ff;
       border: 1px solid #6c63ff; }
+/* custom */
+.ftco-navbar-light .navbar-nav > .nav-item.cta > form button {
+  color: #fff;
+  border: 1px solid #6c63ff;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 4px;
+  background: #6c63ff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px; }
+  .ftco-navbar-light .navbar-nav > .nav-item.cta > form button span {
+    display: inline-block;
+    color: #fff; }
+  .ftco-navbar-light .navbar-nav > .nav-item.cta > form button:hover {
+    color: #fff;
+    background: #6c63ff;
+    border: 1px solid #6c63ff; }
+    .form-button{
+      
+    }
+/* custom */
   .ftco-navbar-light .navbar-nav > .nav-item.cta.cta-colored a {
     border: 1px solid #ff6347;
     background: #ff6347 !important; }
@@ -8301,6 +8326,24 @@ h1, h2, h3, h4, h5,
       .ftco-navbar-light.scrolled .nav-item.cta > a span {
         display: inline-block;
         color: #fff !important; }
+        /* custom css */
+        .ftco-navbar-light.scrolled .nav-item.cta > form button {
+          color: #fff !important;
+          background: #6c63ff;
+          border: none !important;
+          padding-top: 0.5rem !important;
+          padding-bottom: .5rem !important;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+          margin-top: 6px !important;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          -ms-border-radius: 5px;
+          border-radius: 5px; }
+          .ftco-navbar-light.scrolled .nav-item.cta > form button span {
+            display: inline-block;
+            color: #fff !important; }
+        /* custom css */
     .ftco-navbar-light.scrolled .nav-item.cta.cta-colored span {
       border-color: #6c63ff; }
     @media (max-width: 991.98px) {
@@ -9566,7 +9609,7 @@ textarea.form-control {
     display: inline-block;
     margin-bottom: 4px;
     font-weight: 400; }
-    .block-27 ul li a, .block-27 ul li span {
+    .block-27 ul li a, .block-27 ul li span .block-27 ul li form button {
       color: #ff6347;
       text-align: center;
       display: inline-block;

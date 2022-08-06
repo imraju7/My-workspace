@@ -65,7 +65,7 @@ class ProfileController extends Controller
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users,email,' . $user->id,
                 'company_email' => 'required|email|unique:customers,company_email,' . $user->customer->id,
-                'company_phone' => 'required',
+                'company_phone' => 'required|numeric',
                 'company_address' => 'required',
                 'designation' => 'required|string',
                 'company_description' => 'required|string'

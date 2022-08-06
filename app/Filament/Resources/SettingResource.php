@@ -38,14 +38,19 @@ class SettingResource extends Resource
                 // https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d306.24223304076384!2d87.99008641060045!3d26.64016219037149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5bbbd73b9cce1%3A0x91a606bff7f827f2!2sByte%20Encoder!5e0!3m2!1sen!2snp!4v16
                 Forms\Components\TextInput::make('location')->label('Map url')
                     ->url()
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
                 Forms\Components\TextInput::make('email')->label('Business Mail')
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')->label('Business Phone Number')
                     ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('facebook_handle')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('twitter_handle')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('linkedin_handle')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('footer_text')->label('Footer Text')
                     ->required(),

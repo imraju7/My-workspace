@@ -61,9 +61,24 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->action(function (array $data): void {
+                    if ($this->record->candidate()->exists()) {
+                        $this->record->candidate()->delete();
+                    }
+                    if ($this->record->customer()->exists()) {
+                        if ($this->record->customer()->vacancy()->exists()) {
+                            $this->record->customer()->vacancy()->delete();
+                        }
+                        $this->record->customer()->delete();
+                    }
+                    if ($this->record->application()->exists()) {
+                        $this->record->application()->delete();
+                    }
+                    $this->record->delete();
+                }),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

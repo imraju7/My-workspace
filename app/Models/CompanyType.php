@@ -19,4 +19,13 @@ class CompanyType extends Model
     {
         return $this->hasMany(Customer::class, 'company_type_id', 'id');
     }
+
+    public function hello()
+    {
+        if ($this->company()->exists()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

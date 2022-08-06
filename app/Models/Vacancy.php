@@ -19,4 +19,14 @@ class Vacancy extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
+
+    public function application()
+    {
+        return $this->hasOne(Application::class, 'vacancy_id','id');
+    }
+
+    public function hasApplied()
+    {
+        return $this->application()->where('user_id',auth()->user()->id);
+    }
 }

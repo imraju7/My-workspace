@@ -29,10 +29,10 @@ class KycController extends Controller
         $this->validate($request, [
             'designation' => 'required|string',
             'company_type_id' => 'required',
-            'company_name' => 'required|string',
+            'company_name' => 'required|string|unique:customers,company_name',
             'company_description' => 'required|string',
-            'company_phone' => 'required',
-            'company_email' => 'required|email',
+            'company_phone' => 'required|numeric',
+            'company_email' => 'required|email|unique:customers,company_email',
             'company_address' => 'required'
         ]);
 
@@ -47,7 +47,7 @@ class KycController extends Controller
             'company_address' => $request->company_address
         ]);
 
-        return redirect()->route('homepage');
+        return redirect()->route('homepage')->with('success', 'You have unlocked the full potential by verifying your information. Enjoy Hiring !');
     }
 
     public function candidate_index()
@@ -75,6 +75,6 @@ class KycController extends Controller
             'address' => $request->address
         ]);
 
-        return redirect()->route('homepage');
+        return redirect()->route('homepage')->with('success', 'You just unlocked the feature to apply for the jobs you like !');
     }
 }

@@ -25,4 +25,9 @@ class Customer extends Model
     {
         return $this->belongsTo(CompanyType::class, 'company_type_id', 'id');
     }
+
+    public function vacancy()
+    {
+        return $this->hasMany(Vacancy::class, 'customer_id', 'id');
+    }
 }

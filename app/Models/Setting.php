@@ -16,7 +16,7 @@ class Setting extends Model implements HasMedia
 
     protected $table = 'settings';
     protected $fillable = [
-        'business_name', 'location', 'email', 'phone', 'address', 'footer_text', 'about_text'
+        'business_name', 'location', 'email', 'phone', 'address', 'facebook_handle', 'twitter_handle', 'linkedin_handle', 'footer_text', 'about_text'
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -29,8 +29,8 @@ class Setting extends Model implements HasMedia
 
         $this
             ->addMediaConversion('logosize')
-            ->width(60)
-            ->height(50)
+            ->width(100)
+            ->height(100)
             ->nonQueued();
     }
 }

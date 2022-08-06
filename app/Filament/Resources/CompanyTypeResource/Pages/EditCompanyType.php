@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CompanyTypeResource\Pages;
 use App\Filament\Resources\CompanyTypeResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
+use App\Models\CompanyType;
 
 class EditCompanyType extends EditRecord
 {
@@ -13,7 +14,8 @@ class EditCompanyType extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->hidden(fn (CompanyType $record): bool => $record->company()->exists()),
         ];
     }
 }

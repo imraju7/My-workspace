@@ -7,8 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements FilamentUser
+
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -39,6 +41,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function application()
     {
-        $this->hasMany(Application::class, 'user_id', 'id');
+        return $this->hasMany(Application::class, 'user_id', 'id');
     }
 }

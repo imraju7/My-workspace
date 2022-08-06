@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('business_name');
-            $table->string('location');
+            $table->text('location');
             $table->string('email');
             $table->string('phone');
             $table->string('address');
