@@ -10,7 +10,7 @@
                         @csrf
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="address">Where do you live?</label>
+                                <label class="font-weight-bold" for="address">Where do you live? <span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="address" name="address"
                                     value="{{ old('address') }}" placeholder="404-street,Not found">
                                 @error('address')

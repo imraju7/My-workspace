@@ -11,10 +11,13 @@
                     <p><span>Address:</span> {{ $data['setting']->address ?? 'Moon' }}</p>
                 </div>
                 <div class="col-md-4">
-                    <p><span>Phone:</span> <a href="tel://1234567920">{{ $data['setting']->phone ?? 'Moon' }}</a></p>
+                    <p><span>Phone:</span> <a
+                            href="tel:{{ $data['setting']->phone ?? 'Moon' }}">{{ $data['setting']->phone ?? 'Moon' }}</a>
+                    </p>
                 </div>
                 <div class="col-md-4">
-                    <p><span>Email:</span> <a href="mailto:info@yoursite.com">{{ $data['setting']->email ?? 'Moon' }}</a>
+                    <p><span>Email:</span> <a
+                            href="mailto:{{ $data['setting']->email ?? 'Moon' }}">{{ $data['setting']->email ?? 'Moon' }}</a>
                     </p>
                 </div>
             </div>
@@ -22,29 +25,30 @@
                 <div class="col-md-6 order-md-last d-flex">
                     <form action="{{ route('contact') }}" method="POST" class="bg-white p-5 contact-form">
                         @csrf
+                        <span style="color: red;">Every fields below should be filled.</span>
                         <div class="form-group">
-                            <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                            <input type="text" required name="name" value="{{ old('name') }}" class="form-control"
                                 placeholder="Your Name">
                             @error('name')
                                 <span style="color: red;">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                            <input type="email" required name="email" value="{{ old('email') }}" class="form-control"
                                 placeholder="Your Email">
                             @error('email')
                                 <span style="color: red;">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input type="text" name="subject" value="{{ old('subject') }}" class="form-control"
+                            <input type="text" required name="subject" value="{{ old('subject') }}" class="form-control"
                                 placeholder="Subject">
                             @error('subject')
                                 <span style="color: red;">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <textarea name="message" cols="30" rows="7" class="form-control"> {{ old('message') }} </textarea>
+                            <textarea name="message" required cols="30" rows="7" class="form-control"> {{ old('message') }} </textarea>
                             @error('message')
                                 <span style="color: red;">{{ $message }}</span>
                             @enderror

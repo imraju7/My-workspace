@@ -47,7 +47,8 @@
                             Full Name
                         </label>
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="name" type="text"
-                            name="name" value="{{ old('name') }}" placeholder="Your Full Name" autofocus="autofocus">
+                            name="name" value="{{ old('name') }}" placeholder="Your Full Name"
+                            autofocus="autofocus">
                     </div>
                     <div class="mt-4">
                         <label class="block font-medium text-sm text-gray-700" for="email">
@@ -70,20 +71,15 @@
                             Password
                         </label>
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password" type="password"
-                            name="password" autocomplete="current-password">
+                            placeholder="1 Uppercase, 1 Lowercase, 1 Numeric, 1 special character" name="password"
+                            autocomplete="current-password">
                     </div>
                     <div class="mt-4">
                         <label class="block font-medium text-sm text-gray-700" for="password_confirmation">
                             Password Confirmation
                         </label>
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password_confirmation"
-                            type="password" name="password_confirmation" autocomplete="current-password">
-                    </div>
-                    <div class="block mt-4">
-                        <label for="remember_me" class="flex items-center">
-                            <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                        </label>
+                           placeholder="same as password" type="password" name="password_confirmation" autocomplete="current-password">
                     </div>
                     <div class="flex items-center justify-end mt-4">
                         <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"

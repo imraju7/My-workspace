@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/icomoon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css">
 </head>
 
 <body>
@@ -47,22 +48,30 @@
                         <h2 class="ftco-heading-2">About</h2>
                         <p>{{ $data['setting']->footer_text ?? 'Nothing' }}</p>
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
-                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                            <li class="ftco-animate"><a
+                                    href="{{ $data['setting']->twitter_handle ?? 'jobfitts' }}"><span
+                                        class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a
+                                    href="{{ $data['setting']->facebook_handle ?? 'jobfitts' }}"><span
+                                        class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a
+                                    href="{{ $data['setting']->linkedin_handle ?? 'jobfitts' }}"><span
+                                        class="icon-linkedin"></span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <h2 class="ftco-heading-2">Have Questions?</h2>
                         <div class="block-23 mb-3">
                             <ul>
                                 <li><span class="icon icon-map-marker"></span><span
                                         class="text">{{ $data['setting']->address ?? 'No address' }}</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span
+                                <li><a href="tel:{{ $data['setting']->phone ?? 'No phone' }}"><span
+                                            class="icon icon-phone"></span><span
                                             class="text">{{ $data['setting']->phone ?? 'No phone' }}</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span
+                                <li><a href="mailto:{{ $data['setting']->email ?? 'No phone' }}"><span
+                                            class="icon icon-envelope"></span><span
                                             class="text">{{ $data['setting']->email ?? 'No email' }}</span></a></li>
                             </ul>
                         </div>
@@ -98,6 +107,34 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            $(window).on('load', function() {
+                var message = "{{ session('success') }}";
+                toastr.options = {
+                    "closeButton": true,
+                    "showDuration": "1000",
+                }
+                toastr.success(message);
+            });
+        </script>
+    @endif
+
+    @if (Session::has('warning'))
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            var message = "{{ session('warning') }}";
+            toastr.options = {
+                "closeButton": true,
+                "showDuration": "1000",
+            }
+            toastr.warning(message);
+        });
+    </script>
+
+@endif
 
 </body>
 

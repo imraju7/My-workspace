@@ -18,18 +18,40 @@
                                     <div class="one-third mb-4 mb-md-0">
                                         <div class="job-post-item-header d-flex align-items-center">
                                             <h2 class="mr-3 text-black"><a
-                                                    href="{{ route('jobs.detail', $job->id) }}">{{ $job->title }}</a>
+                                                    href="{{ route('jobs.detail', $job->id) }}">{{ ucWords($job->title) }}</a>
                                             </h2>
                                             <div class="badge-wrap">
-                                                <span
-                                                    class="bg-primary text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
+                                                @if ($job->job_type == 'part-time')
+                                                    <span
+                                                        class="bg-primary text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
+                                                @endif
+                                                @if ($job->job_type == 'full-time')
+                                                    <span
+                                                        class="bg-warning text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
+                                                @endif
+                                                @if ($job->job_type == 'casual')
+                                                    <span
+                                                        class="bg-info text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
+                                                @endif
+                                                @if ($job->job_type == 'contract')
+                                                    <span
+                                                        class="bg-danger text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
+                                                @endif
                                             </div>
+                                            @auth
+                                                @if ($job->hasApplied)
+                                                    <div class="badge-wrap">
+                                                        <span
+                                                            class="bg-danger text-white badge pl-2 py-2 px-3">Applied</span>
+                                                    </div>
+                                                @endif
+                                            @endauth
                                         </div>
                                         <div class="job-post-item-body d-block d-md-flex">
-                                            <div class="mr-3"><span class="icon-layers"></span> <a
-                                                    href="#">{{ $job->company->company_name }}</a></div>
+                                            <div class="mr-3"><span class="icon-layers"></span>
+                                                {{ ucWords($job->company->company_name) }}</div>
                                             <div><span class="icon-my_location"></span>
-                                                <span>{{ $job->company->company_address }}</span>
+                                                <span>{{ ucWords($job->company->company_address) }}</span>
                                             </div>
                                         </div>
                                     </div>

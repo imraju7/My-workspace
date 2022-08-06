@@ -25,7 +25,7 @@
 
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="company_name">Company Name</label>
+                                <label class="font-weight-bold" for="company_name">Company Name <span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="company_name" name="company_name"
                                     value="{{ old('company_name') }}" placeholder="eg. Facebook, Inc.">
                                 @error('company_name')
@@ -36,7 +36,7 @@
 
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="company_type_id">Company Type</label>
+                                <label class="font-weight-bold" for="company_type_id">Company Type <span style="color: red;">*</span></label>
                                 <select name="company_type_id" class="form-control">
                                     <option value="">Select a Type</option>
                                     @foreach ($data['companyTypes'] as $type)
@@ -51,7 +51,7 @@
 
                         <div class="row form-group">
                             <div class="col-md-12">
-                                <h3>Describe your company</h3>
+                                <h3>Describe your company <span style="color: red;">*</span></h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <textarea name="company_description"
@@ -65,7 +65,7 @@
 
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="company_phone">Company Phone</label>
+                                <label class="font-weight-bold" for="company_phone">Company Phone <span style="color: red;">*</span></label>
                                 <input type="text" id="company_phone" name="company_phone" class="form-control"
                                     value="{{ old('company_phone') }}" placeholder="+601 .. ">
                                 @error('company_phone')
@@ -76,7 +76,7 @@
 
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="company_email">Company Email</label>
+                                <label class="font-weight-bold" for="company_email">Company Email <span style="color: red;">*</span></label>
                                 <input type="email" class="form-control" id="company_email" name="company_email"
                                     value="{{ old('company_email') }}" placeholder="johndoe@anon.com">
                                 @error('company_email')
@@ -87,7 +87,7 @@
 
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="company_address">Company Address</label>
+                                <label class="font-weight-bold" for="company_address">Company Address <span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="company_address" name="company_address"
                                     value="{{ old('company_address') }}" placeholder="404-street,Not found">
                                 @error('company_address')
@@ -98,7 +98,7 @@
 
                         <div class="row form-group mb-5">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="designation">Your position in the company</label>
+                                <label class="font-weight-bold" for="designation">Your position in the company <span style="color: red;">*</span></label>
                                 <input type="text" id="designation" name="designation" value="{{old('designation')}}" class="form-control"
                                     placeholder="Human Resource Manager">
                                 @error('designation')

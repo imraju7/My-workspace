@@ -151,7 +151,7 @@
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
                                     <label class="font-weight-bold" for="password">Old Password</label>
-                                    <input type="text" id="password" name="password" required value=""
+                                    <input type="password" id="password" name="password" required value=""
                                         class="form-control" placeholder="Old Password">
                                     @error('password')
                                         <span style="color: red;">{{ $message }}</span>
@@ -164,7 +164,7 @@
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="font-weight-bold" for="name">New Password</label>
-                                <input type="text" id="new_password" name="new_password" required value=""
+                                <input type="password" id="new_password" name="new_password" required value=""
                                     class="form-control" placeholder="New password">
                                 @error('new_password')
                                     <span style="color: red;">{{ $message }}</span>
