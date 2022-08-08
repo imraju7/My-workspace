@@ -54,11 +54,6 @@
                     <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
                         <a href="{{ route('profile') }}" class="nav-link ">Profile</a>
                     </li>
-                    <li class=" nav-item  ">
-                        <a href="{{ route('profile') }}" class="nav-link "><span class="icon-envelope"
-                                title="View Applications"></span><span style="color: green; font-style: bold;">
-                            </span></a>
-                    </li>
                     <li class="nav-item cta cta-colored mr-md-1"><a href="{{ route('jobs.post') }}" class="nav-link">Post a
                             Job</a>
                     </li>
