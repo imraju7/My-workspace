@@ -158,30 +158,30 @@
                                     @enderror
                                     @if (session('error'))
                                         <span style="color: red;">{{ session('error') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="name">New Password</label>
+                                    <input type="password" id="new_password" name="new_password" required value=""
+                                        class="form-control" placeholder="New password">
+                                    @error('new_password')
+                                        <span style="color: red;">{{ $message }}</span>
                                     @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="name">New Password</label>
-                                <input type="password" id="new_password" name="new_password" required value=""
-                                    class="form-control" placeholder="New password">
-                                @error('new_password')
-                                    <span style="color: red;">{{ $message }}</span>
-                                @enderror
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" value="Reset Password" class="btn btn-primary  py-2 px-5">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <input type="submit" value="Reset Password" class="btn btn-primary  py-2 px-5">
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-{{-- @include('partials.newsletter') --}}
+    {{-- @include('partials.newsletter') --}}
 @endsection

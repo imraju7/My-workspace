@@ -12,8 +12,13 @@ class Conversation extends Model
     protected $table = 'conversations';
 
     protected $fillable = [
-        'topic', 'intitated_by', 'initiated_towards'
+        'topic', 'initiated_by', 'initiated_towards'
     ];
+
+    public function message()
+    {
+        return $this->hasMany(Message::class, 'conversation_id', 'id');
+    }
 
     public function initiator()
     {

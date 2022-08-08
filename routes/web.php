@@ -12,6 +12,7 @@ use App\Http\Middleware\HasVerifiedKyc;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -91,6 +92,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('my-jobs/{id}/applicants', [JobController::class, 'applicants'])->name('jobs.applicants');
 
+        // for candidate
+        Route::get('applied-jobs', [JobController::class, 'applied_jobs'])->name('jobs.applied');
+        // for candidate
         Route::get('my-jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
 
         Route::post('my-jobs/application/{id}', [JobController::class, 'hire'])->name('jobs.applicants.hire');
@@ -107,8 +111,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('jobs/{id}', [JobController::class, 'detail'])->name('jobs.detail');
         Route::post('jobs/apply/{id}', [JobController::class, 'apply'])->name('jobs.apply');
 
-        // messaging
-        Route::get('jobs/{job_id}/message/{applicant_id}', [JobController::class, 'download_cv'])->name('jobs.applicants.message');
+        // messaging customer
+        Route::get('jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'customer_messages'])->name('jobs.applicants.message');
+        Route::post('jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'store_message_from_customer']);
+        
+        // messaging candidate
+        Route::get('applied-jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'candidate_messages'])->name('jobs.candidates.message');
+        Route::post('applied-jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'store_message_from_candidate']);
     });
 });
 

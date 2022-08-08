@@ -15,8 +15,7 @@
 
                 <div class="col-lg-4">
                     @if ($data['applied'])
-                        <p><button disabled href="#"
-                                class="btn btn-danger mt-4 py-2 px-4">Already Applied</button></p>
+                        <p><button disabled href="#" class="btn btn-danger mt-4 py-2 px-4">Applied</button></p>
                     @else
                         <form action="{{ route('jobs.apply', $data['job']->id) }}" method="POST"
                             enctype="multipart/form-data" class="p-5 bg-white">

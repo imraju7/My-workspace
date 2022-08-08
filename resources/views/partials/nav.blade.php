@@ -10,18 +10,28 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 @guest
-                    <li class="nav-item {{ (Request::is('/') ? 'active' : '') }}"><a href="{{ route('homepage') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item {{ (Request::is('jobs') || Request::is('jobs/*') ? 'active' : '') }} "><a href="{{ route('jobs') }}" class="nav-link">Jobs</a></li>
+                    <li class="nav-item {{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('homepage') }}"
+                            class="nav-link">Home</a></li>
+                    <li class="nav-item {{ Request::is('jobs') || Request::is('jobs/*') ? 'active' : '' }} "><a
+                            href="{{ route('jobs') }}" class="nav-link">Jobs</a></li>
                 @endguest
+
                 @candidate
-                <li class="nav-item {{ (Request::is('/') ? 'active' : '') }}"><a href="{{ route('homepage') }}" class="nav-link">Home</a></li>
-                <li class="nav-item {{ (Request::is('jobs') || Request::is('jobs/*') ? 'active' : '') }} "><a href="{{ route('jobs') }}" class="nav-link">Jobs</a></li>
+                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('homepage') }}"
+                        class="nav-link">Home</a></li>
+                <li class="nav-item {{ Request::is('jobs') || Request::is('jobs/*') ? 'active' : '' }} "><a
+                        href="{{ route('jobs') }}" class="nav-link">Jobs</a></li>
                 @endcandidate
+
                 @customer
-                    <li class="nav-item {{ (Request::is('my-jobs/*') || Request::is('my-jobs') ? 'active' : '') }} "><a href="{{ route('my-jobs') }}" class="nav-link">My Jobs</a></li>
+                    <li class="nav-item {{ Request::is('my-jobs/*') || Request::is('my-jobs') ? 'active' : '' }} "><a
+                            href="{{ route('my-jobs') }}" class="nav-link">My Jobs</a></li>
                 @endcustomer
-                <li class="nav-item {{ (Request::is('contact-us') ? 'active' : '') }} "><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
-                <li class="nav-item {{ (Request::is('about-us') ? 'active' : '') }}"><a href="{{ route('about') }}" class="nav-link">About</a></li>
+
+                <li class="nav-item {{ Request::is('contact-us') ? 'active' : '' }} "><a href="{{ route('contact') }}"
+                        class="nav-link">Contact</a></li>
+                <li class="nav-item {{ Request::is('about-us') ? 'active' : '' }}"><a href="{{ route('about') }}"
+                        class="nav-link">About</a></li>
 
                 @guest
                     <li class="nav-item cta mr-md-1"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
@@ -30,22 +40,33 @@
                 @endguest
 
                 @candidate
-                <li class=" nav-item {{ (Request::is('profile') ? 'active' : '') }} ">
+                <li class=" nav-item {{ Request::is('profile') ? 'active' : '' }} ">
                     <a href="{{ route('profile') }}" class="nav-link ">Profile</a>
+                </li>
+                <li class=" nav-item {{ Request::is('applied-jobs') ? 'active' : '' }}">
+                    <a href="{{ route('jobs.applied') }}" class="nav-link "><span class="icon-briefcase"
+                            title="Applied Jobs"></span></a>
                 </li>
                 <li class="nav-item cta mr-md-1 "><a href="{{ route('jobs') }}" class="nav-link">Find a Job</a></li>
                 @endcandidate
 
                 @customer
-                    <li class="nav-item {{ (Request::is('profile') ? 'active' : '') }}">
+                    <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
                         <a href="{{ route('profile') }}" class="nav-link ">Profile</a>
                     </li>
-                    <li class="nav-item cta cta-colored mr-md-1"><a href="{{ route('jobs.post') }}" class="nav-link">Post a Job</a>
+                    <li class=" nav-item  ">
+                        <a href="{{ route('profile') }}" class="nav-link "><span class="icon-envelope"
+                                title="View Applications"></span><span style="color: green; font-style: bold;">
+                            </span></a>
+                    </li>
+                    <li class="nav-item cta cta-colored mr-md-1"><a href="{{ route('jobs.post') }}" class="nav-link">Post a
+                            Job</a>
                     </li>
                 @endcustomer
+
                 @auth
                     <li class="nav-item cta mr-md-1">
-                        <form  method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button class="nav-link" type="submit">Logout</button>
                         </form>

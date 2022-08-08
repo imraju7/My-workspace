@@ -20,12 +20,12 @@ class Message extends Model
         return $this->belongsTo(Conversation::class, 'id', 'conversation_id');
     }
 
-    public function sender()
+    public function senderr()
     {
-        return $this->belongsTo(User::class, 'id', 'sender');
+        return $this->belongsTo(User::class, 'sender', 'id');
     }
 
-    public function receiver()
+    public function receiverr()
     {
         return $this->belongsTo(User::class, 'id', 'receiver');
     }
