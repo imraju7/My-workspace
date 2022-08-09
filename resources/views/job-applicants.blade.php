@@ -21,10 +21,6 @@
                                                 <h2 class="mr-3 text-black"><a
                                                         href="{{ route('jobs.applicants', $applicant->id) }}">{{ $applicant->title }}</a>
                                                 </h2>
-                                                {{-- <div class="badge-wrap">
-                                                <span
-                                                    class="bg-primary text-white badge py-2 px-3">{{ ucfirst($applicant->job_type) }}</span>
-                                            </div> --}}
                                             </div>
                                             <div class="job-post-item-body d-block d-md-flex">
                                                 <div class="mr-3"><span class="icon-person"></span>

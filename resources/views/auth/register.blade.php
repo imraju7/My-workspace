@@ -60,9 +60,9 @@
                     <div class="mt-4">
                         <label for="role" class="block font-medium text-sm text-gray-70">Register as:</label>
                         <select id="roles" name="role" class="form-input rounded-md shadow-sm block mt-1 w-full">
-                            <option selected value="customer">Employer (Post a
+                            <option selected value="customer">Customer (Post a
                                 Job)</option>
-                            <option value="candidate">Employee (Find a
+                            <option value="candidate">Candidate (Find a
                                 Job)</option>
                         </select>
                     </div>
@@ -79,7 +79,8 @@
                             Password Confirmation
                         </label>
                         <input class="form-input rounded-md shadow-sm block mt-1 w-full" id="password_confirmation"
-                           placeholder="same as password" type="password" name="password_confirmation" autocomplete="current-password">
+                            placeholder="same as password" type="password" name="password_confirmation"
+                            autocomplete="current-password">
                     </div>
                     <div class="flex items-center justify-end mt-4">
                         <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"

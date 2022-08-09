@@ -94,7 +94,8 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 
         // for candidate
         Route::get('applied-jobs', [JobController::class, 'applied_jobs'])->name('jobs.applied');
-        // for candidate
+        
+        // for customer
         Route::get('my-jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
 
         Route::post('my-jobs/application/{id}', [JobController::class, 'hire'])->name('jobs.applicants.hire');
@@ -107,10 +108,14 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 
         Route::post('my-jobs/edit-a-job/{id}', [JobController::class, 'update']);
 
+        // read feedbacks 
+        Route::get('my-jobs/feedbacks/{id}', [JobController::class, 'feedbacks'])->name('jobs.feedbacks');
+
         // For candidates to find and view a job
         Route::get('find-a-job', [JobController::class, 'findAJob'])->name('find-a-job');
         Route::get('jobs/{id}', [JobController::class, 'detail'])->name('jobs.detail');
         Route::post('jobs/apply/{id}', [JobController::class, 'apply'])->name('jobs.apply');
+        Route::post('jobs/feedback/{job_id}', [JobController::class, 'feedback'])->name('jobs.feedback.create');
 
         // messaging customer
         Route::get('jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'customer_messages'])->name('jobs.applicants.message');

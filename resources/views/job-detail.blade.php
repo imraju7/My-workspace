@@ -11,6 +11,20 @@
                     <br>
                     <h2></h2>
                     <p>{{ $data['job']->description }}</p>
+                    <div class="col-lg-8">
+                        <form action="{{ route('jobs.feedback.create', $data['job']->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <textarea name="message" required cols="30" rows="5" class="form-control"> {{ old('message') }} </textarea>
+                                @error('message')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Send Feedback" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="col-lg-4">

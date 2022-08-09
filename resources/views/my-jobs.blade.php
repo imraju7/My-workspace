@@ -52,13 +52,19 @@
                                         <div>
                                             <a href="{{ route('jobs.edit', $job->id) }}"
                                                 class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                                <span class="icon-mode_edit" title="View Applications"></span>
+                                                <span class="icon-mode_edit" title="Edit Job"></span>
                                             </a>
                                         </div>
                                         <div>
                                             <a href="{{ route('jobs.applicants', $job->id) }}"
                                                 class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                                 <span class="icon-compass" title="View Applications"></span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('jobs.feedbacks', $job->id) }}"
+                                                class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                                <span class="icon-newspaper-o" title="View Feedbacks"></span>
                                             </a>
                                         </div>
                                         <form method="POST" action="{{ route('jobs.delete', $job->id) }}">

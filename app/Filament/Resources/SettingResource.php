@@ -10,13 +10,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Arr;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-
-
 
 class SettingResource extends Resource
 {
@@ -54,8 +49,15 @@ class SettingResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('footer_text')->label('Footer Text')
                     ->required(),
-                Forms\Components\Textarea::make('about_text')->label('About Page Text')
+                Forms\Components\RichEditor::make('about_text')->label('About Page')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('uploads')
+                    ->fileAttachmentsVisibility('public')
                     ->required()
+                    ->reactive()
+                    ->columnSpan([
+                        'sm' => 2,
+                    ])
             ]);
     }
 

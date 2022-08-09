@@ -9,6 +9,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Vacancy;
+use App\Models\VacancyFeedback;
 
 class JobController extends Controller
 {
@@ -228,5 +229,39 @@ class JobController extends Controller
             'setting' => $setting
         ];
         return view('find-a-job', compact('data'));
+    }
+
+    public function feedbacks($job_id)
+    {
+        $vacancy = Vacancy::findOrFail($job_id);
+        if ($vacancy->customer_id == auth()->user()->customer->id) {
+            $feedbacks = VacancyFeedback::where('vacancy_id', $job_id)->get();
+            $setting = Setting::first();
+            $data = [
+                'pageTitle' => 'Feedback',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'feedbacks' => $feedbacks,
+                'vacancy' => $vacancy,
+                'setting' => $setting
+            ];
+            return view('job-feedbacks', compact('data'));
+        }
+        abort(403, 'Do not mess with the url please !');
+    }
+
+    public function feedback(Request $request, $job_id)
+    {
+        $this->validate($request, [
+            'message' => 'required|string|max:254'
+        ]);
+
+        VacancyFeedback::create([
+            'vacancy_id' => $job_id,
+            'user_id' => auth()->user()->id,
+            'message' => $request->message
+        ]);
+
+        return redirect()->back()->with('success', 'Thank you for your feedback.');
     }
 }
