@@ -47,7 +47,7 @@
                     <a href="{{ route('jobs.applied') }}" class="nav-link "><span class="icon-briefcase"
                             title="Applied Jobs"></span></a>
                 </li>
-                <li class="nav-item cta mr-md-1 "><a href="{{ route('jobs') }}" class="nav-link">Find a Job</a></li>
+                <li class="nav-item cta mr-md-1 "><a href="{{ route('find-a-job') }}" class="nav-link">Find a Job</a></li>
                 @endcandidate
 
                 @customer

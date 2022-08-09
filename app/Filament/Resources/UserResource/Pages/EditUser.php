@@ -5,6 +5,16 @@ namespace App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Pages\Actions\Action;
+use Illuminate\Support\Facades\DB;
+use Mail;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Filament\Notifications\Notification;
+use App\Models\Application;
+use App\Models\Candidate;
+use App\Models\Customer;
+use App\Models\Vacancy;
 
 class EditUser extends EditRecord
 {
@@ -14,20 +24,41 @@ class EditUser extends EditRecord
     {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make()->action(function (array $data): void {
-                if ($this->record->candidate()->exists()) {
-                    $this->record->candidate()->delete();
-                }
-                if ($this->record->customer()->exists()) {
-                    if ($this->record->customer()->vacancy()->exists()) {
-                        $this->record->customer()->vacancy()->delete();
-                    }
-                    $this->record->customer()->delete();
-                }
-                if ($this->record->application()->exists()) {
-                    $this->record->application()->delete();
+            Action::make('Send Password Reset Link')
+                ->requiresConfirmation()
+                ->action(function (): void {
+                    $token = Str::random(64);
+
+                    DB::table('password_resets')->insert([
+                        'email' => $this->record->email,
+                        'token' => $token,
+                        'created_at' => Carbon::now()
+                    ]);
+
+                    Mail::send('email.forgotpassword', ['token' => $token], function ($message) use ($token) {
+                        $message->to($this->record->email);
+                        $message->subject('Reset Password');
+                    });
+                    Notification::make()
+                        ->title('Password Reset Mail sent successfully')
+                        ->success()
+                        ->send();
+                }),
+            Actions\DeleteAction::make()->action(function (): void {
+                Candidate::where('user_id', $this->record->id)->delete();
+                Application::where('user_id', $this->record->id)->delete();
+                $customer = customer::where('user_id', $this->record->id)->first();
+                if ($customer) {
+                    $vacancies = Vacancy::where('customer_id', $customer->id)->get()->pluck('id');
+                    Application::whereIn('vacancy_id', $vacancies)->delete();
+                    Vacancy::where('customer_id', $customer->id)->delete();
+                    $customer->delete();
                 }
                 $this->record->delete();
+                Notification::make()
+                    ->title('Deleted successfully')
+                    ->success()
+                    ->send();
             }),
         ];
     }

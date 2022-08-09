@@ -216,4 +216,17 @@ class JobController extends Controller
 
         return view('applied-jobs', compact('data'));
     }
+
+    public function findAJob()
+    {
+        $setting = Setting::first();
+        $data = [
+            'pageTitle' => 'Available Jobs',
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+            'jobs' => Vacancy::paginate(5),
+            'setting' => $setting
+        ];
+        return view('find-a-job', compact('data'));
+    }
 }

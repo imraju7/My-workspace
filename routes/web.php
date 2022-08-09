@@ -67,7 +67,7 @@ Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -107,14 +107,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('my-jobs/edit-a-job/{id}', [JobController::class, 'update']);
 
-        // For candidates and guests to find and view a job
+        // For candidates to find and view a job
+        Route::get('find-a-job', [JobController::class, 'findAJob'])->name('find-a-job');
         Route::get('jobs/{id}', [JobController::class, 'detail'])->name('jobs.detail');
         Route::post('jobs/apply/{id}', [JobController::class, 'apply'])->name('jobs.apply');
 
         // messaging customer
         Route::get('jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'customer_messages'])->name('jobs.applicants.message');
         Route::post('jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'store_message_from_customer']);
-        
+
         // messaging candidate
         Route::get('applied-jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'candidate_messages'])->name('jobs.candidates.message');
         Route::post('applied-jobs/{job_id}/message/{applicant_id}', [MessageController::class, 'store_message_from_candidate']);
