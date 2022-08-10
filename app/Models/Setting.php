@@ -29,8 +29,6 @@ class Setting extends Model implements HasMedia
 
         $this
             ->addMediaConversion('logosize')
-            ->width(100)
-            ->height(100)
             ->nonQueued();
     }
 }

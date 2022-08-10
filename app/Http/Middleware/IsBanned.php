@@ -17,7 +17,7 @@ class IsBanned
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->is_banned) {
-            abort(403, 'You have been banned from using the application. Contact admin for further support or inquiry.');
+            abort(415, 'You have been banned from using the application. Contact admin for further support or inquiry.');
         }
         return $next($request);
     }

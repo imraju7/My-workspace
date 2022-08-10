@@ -66,10 +66,10 @@ Route::get('about-us', [AboutController::class, 'index'])->name('about');
 Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
 
 Route::middleware(['auth', 'verified', 'banned'])->group(function () {
-
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('kyc-verification-1', [KycController::class, 'customer_index'])->name('customer.kyc');
     Route::post('kyc-verification-1', [KycController::class, 'customer_verify']);

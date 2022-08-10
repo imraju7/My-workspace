@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('homepage') }}"><img width="100px" height="50px"
+        <a class="navbar-brand" href="{{ route('homepage') }}"><img width="80px" height="80px"
                 src="{{ $data['logo'] }}"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
             aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">

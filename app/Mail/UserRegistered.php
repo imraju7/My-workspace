@@ -12,10 +12,12 @@ class UserRegistered extends Mailable
     use Queueable, SerializesModels;
 
     public $password;
+    public $email;
 
 
-    public function __construct($password)
+    public function __construct($email,$password)
     {
+        $this->email = $email;
         $this->password = $password;
     }
 
