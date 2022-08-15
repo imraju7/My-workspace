@@ -1,4 +1,10 @@
 @extends('layouts.app')
+
+@push('styles')
+    {{-- <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
+@endpush
+
 @section('content')
     <div class="ftco-section bg-light">
         <div class="container">
@@ -10,8 +16,8 @@
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="font-weight-bold" for="title">Job Title</label>
-                                <input type="text" id="title" name="title" value="{{old('title')}}" class="form-control"
-                                    placeholder="eg. Professional UI/UX Designer">
+                                <input type="text" id="title" name="title" value="{{ old('title') }}"
+                                    class="form-control" placeholder="eg. Professional UI/UX Designer">
                                 @error('title')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
@@ -53,7 +59,7 @@
                                 <h3>Describe the job requirements</h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <textarea name="description" placeholder="" class="form-control" id="" cols="30" rows="5">{{ old('description') }}</textarea>
+                                <textarea name="description" class="form-control description" id="" cols="30" rows="5">{{ old('description') }}</textarea>
                                 @error('description')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
@@ -94,6 +100,30 @@
             </div>
         </div>
     </div>
-
-    {{-- @include('partials.newsletter') --}}
 @endsection
+
+@push('scripts')
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.description').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                ],
+                popover: {
+                    image: [
+                       
+                    ]
+                }
+            });
+        });
+    </script>
+@endpush

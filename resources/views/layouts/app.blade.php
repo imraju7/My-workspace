@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/icomoon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css">
+    @stack('styles')
 </head>
 
 <body>
@@ -109,6 +110,8 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
+    @stack('scripts')
+
     @if (Session::has('success'))
         <script type="text/javascript">
             $(window).on('load', function() {
@@ -123,18 +126,17 @@
     @endif
 
     @if (Session::has('warning'))
-    <script type="text/javascript">
-        $(window).on('load', function() {
-            var message = "{{ session('warning') }}";
-            toastr.options = {
-                "closeButton": true,
-                "showDuration": "1000",
-            }
-            toastr.warning(message);
-        });
-    </script>
-
-@endif
+        <script type="text/javascript">
+            $(window).on('load', function() {
+                var message = "{{ session('warning') }}";
+                toastr.options = {
+                    "closeButton": true,
+                    "showDuration": "1000",
+                }
+                toastr.warning(message);
+            });
+        </script>
+    @endif
 
 </body>
 

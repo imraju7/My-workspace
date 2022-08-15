@@ -1,10 +1,17 @@
 @extends('layouts.app')
+
+@push('styles')
+    {{-- <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
+@endpush
+
+
 @section('content')
     <div class="ftco-section bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-8 mb-5">
-                    <h1>Post a Job</h1>
+                    <h1>Edit a Job</h1>
                     <form action="{{ route('jobs.edit', $data['job']->id) }}" method="POST" class="p-5 bg-white">
                         @csrf
                         <div class="row form-group">
@@ -97,6 +104,30 @@
             </div>
         </div>
     </div>
-
-    {{-- @include('partials.newsletter') --}}
 @endsection
+
+@push('scripts')
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.description').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                ],
+                popover: {
+                    image: [
+
+                    ]
+                }
+            });
+        });
+    </script>
+@endpush
