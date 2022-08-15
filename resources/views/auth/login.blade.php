@@ -47,6 +47,13 @@
                         </ul>
                     </div>
                 @endif
+                @if (session('banned'))
+                    <div class="mb-4">
+                        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                            <li> {{ session('banned') }}</li>
+                        </ul>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div>

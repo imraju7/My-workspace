@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IsBanned
 {
@@ -17,7 +18,8 @@ class IsBanned
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->is_banned) {
-            abort(415, 'You have been banned from using the application. Contact admin for further support or inquiry.');
+            Auth::logout();
+            return redirect()->route('login')->with('banned', 'You have been banned from using the application. Contact admin for further support or inquiry.');
         }
         return $next($request);
     }

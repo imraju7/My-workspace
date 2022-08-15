@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Vacancy;
 use App\Models\VacancyFeedback;
+use App\Mail\ApplicationAccepted;
+use App\Mail\ApplicationRejected;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -20,7 +23,7 @@ class JobController extends Controller
             'pageTitle' => 'Available Jobs',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => Vacancy::paginate(5),
+            'jobs' => Vacancy::where('is_published', true)->paginate(5),
             'setting' => $setting
         ];
         return view('jobs', compact('data'));
@@ -30,9 +33,16 @@ class JobController extends Controller
     {
         $setting = Setting::first();
         $jobs = Vacancy::query();
-        if (request('job_type')) {
-            $jobs->where('job_type', $request->job_type)
-                ->where('title', 'Like', '%' . $request->title . '%');
+        if (request('title') && request('job_type') && request('address')) {
+            $jobs->where('title', 'Like', '%' . $request->title . '%')
+                ->where('job_type', $request->job_type)
+                ->where('address', 'Like', '%' . $request->address . '%');
+        } elseif (request('title') && request('job_type')) {
+            $jobs->where('title', 'Like', '%' . $request->title . '%')
+                ->where('job_type', $request->job_type);
+        } elseif (request('title') && request('address')) {
+            $jobs->where('title', 'Like', '%' . $request->title . '%')
+                ->where('address', 'Like', '%' . $request->address . '%');
         } else {
             $jobs->where('title', 'Like', '%' . $request->title . '%');
         }
@@ -40,7 +50,7 @@ class JobController extends Controller
             'pageTitle' => 'Available Jobs',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => $jobs->orderBy('id', 'desc')->paginate(5),
+            'jobs' => $jobs->where('is_published', true)->orderBy('id', 'desc')->paginate(5),
             'setting' => $setting
         ];
         return view('jobs', compact('data'));
@@ -112,7 +122,8 @@ class JobController extends Controller
         $this->validate($request, [
             'title' => 'required|string',
             'job_type' => 'required|in:full-time,part-time,casual,contract',
-            'description' => 'required'
+            'description' => 'required',
+            'address' => 'required|string|max:254'
         ]);
 
         Vacancy::create([
@@ -120,7 +131,9 @@ class JobController extends Controller
             'title' => $request->title,
             'job_type' => $request->job_type,
             'is_vacant' => 1,
-            'description' => $request->description
+            'description' => $request->description,
+            'address' => $request->address,
+            'is_published' => $request->is_published ? 1 : 0
         ]);
 
         return redirect()->route('my-jobs')->with('success', 'New Job created successfully. Sit back while Applicants apply to the job.');
@@ -146,13 +159,16 @@ class JobController extends Controller
         $this->validate($request, [
             'title' => 'required|string',
             'job_type' => 'required|in:full-time,part-time,casual,contract',
-            'description' => 'required'
+            'description' => 'required',
+            'address' => 'required|string|max:254'
         ]);
         $job = Vacancy::findOrFail($id);
         $job->update([
             'title' => $request->title,
             'job_type' => $request->job_type,
-            'description' => $request->description
+            'description' => $request->description,
+            'address' => $request->address,
+            'is_published' => $request->is_published ? 1 : 0
         ]);
         return redirect()->route('my-jobs')->with('success', 'Job updated successfully.');
     }
@@ -186,17 +202,22 @@ class JobController extends Controller
         return response()->download(public_path('uploads/' . $application->file));
     }
 
-    public function hire($id)
+    public function accept($id)
     {
         $applicant = Application::findOrFail($id);
-        $vacancy = Vacancy::find($applicant->vacancy_id);
-        $vacancy->is_vacant = false;
-        $vacancy->save();
-        $candidate = Candidate::find($applicant->user->candidate->id);
-        $candidate->is_recruited = true;
-        $candidate->recruited_by = $vacancy->customer_id;
-        $candidate->save();
-        return redirect()->back()->with('success', 'Candidate Hired !');
+        $applicant->is_accepted = true;
+        $applicant->save();
+        Mail::to($applicant->user->email)->send(new ApplicationAccepted($applicant->vacancy->company->company_name));
+        return redirect()->back()->with('success', 'Application accepted and the candidate is mailed to get prepared for the next phase !');
+    }
+
+    public function reject($id)
+    {
+        $applicant = Application::findOrFail($id);
+        $applicant->is_rejected = true;
+        $applicant->save();
+        Mail::to($applicant->user->email)->send(new ApplicationRejected($applicant->vacancy->company->company_name));
+        return redirect()->back()->with('success', 'Application rejected !');
     }
 
     // for candidate

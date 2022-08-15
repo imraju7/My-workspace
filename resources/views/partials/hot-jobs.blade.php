@@ -39,7 +39,7 @@
                                         <div class="mr-3"><span class="icon-layers"></span>
                                             {{ ucWords($job->company->company_name) }}</div>
                                         <div><span class="icon-my_location"></span>
-                                            <span>{{ ucWords($job->company->company_address) }}</span>
+                                            <span>{{ ucWords($job->address) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                     <div>
                                         <a href="{{ route('jobs.detail', $job->id) }}"
                                             class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                            <span class="icon-eye" title="View"></span>
+                                            <button type="button" class="btn btn-primary py-2">View</button>
                                         </a>
                                     </div>
                                 </div>

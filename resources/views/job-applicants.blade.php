@@ -18,13 +18,20 @@
                                     <div class="job-post-item py-4 d-block d-lg-flex align-items-center">
                                         <div class="one-third mb-4 mb-md-0">
                                             <div class="job-post-item-header d-flex align-items-center">
-                                                <h2 class="mr-3 text-black"><a
-                                                        href="{{ route('jobs.applicants', $applicant->id) }}">{{ $applicant->title }}</a>
+                                                <h2 class="mr-3 text-black">{{ ucwords($applicant->user->name) }}
                                                 </h2>
+                                                @if ($applicant->is_accepted)
+                                                    <div class="badge-wrap">
+                                                        <span class="bg-success text-white badge py-2 px-3">Accepted</span>
+                                                    </div>
+                                                @endif
+                                                @if ($applicant->is_rejected)
+                                                <div class="badge-wrap">
+                                                    <span class="bg-danger text-white badge py-2 px-3">Rejected</span>
+                                                </div>
+                                            @endif
                                             </div>
                                             <div class="job-post-item-body d-block d-md-flex">
-                                                <div class="mr-3"><span class="icon-person"></span>
-                                                    {{ ucWords($applicant->user->name) }}</div>
                                                 <div class="mr-3"><span class="icon-my_location"></span>
                                                     <span>{{ $applicant->user->candidate->address }}</span>
                                                 </div>
@@ -41,13 +48,24 @@
                                                     <span class="icon-envelope" title="Message"></span>
                                                 </a>
                                             </div>
-                                            <form method="POST"
-                                                action="{{ route('jobs.applicants.hire', $applicant->id) }}">
-                                                @csrf
-                                                <button type="submit"
-                                                    onclick="return confirm('Are you sure you want to Hire this candidate?');"
-                                                    class="btn btn-primary py-2">Hire</button>
-                                            </form>
+                                            @if (!$applicant->is_accepted && !$applicant->is_rejected)
+                                                <form method="POST"
+                                                    action="{{ route('jobs.applicants.accept', $applicant->id) }}">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        onclick="return confirm('Are you sure you want to Accept this candidate?');"
+                                                        class=" mr-2 btn btn-primary py-2">Accept</button>
+                                                </form>
+                                            @endif
+                                            @if (!$applicant->is_rejected && !$applicant->is_accepted)
+                                                <form method="POST"
+                                                    action="{{ route('jobs.applicants.reject', $applicant->id) }}">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        onclick="return confirm('Are you sure you want to Reject this candidate?');"
+                                                        class="btn btn-danger py-2">Reject</button>
+                                                </form>
+                                            @endif
                                             <div class="ml-2">
                                                 <a href="{{ route('jobs.applicants.download', $applicant->id) }}"
                                                     class="icon text-center d-flex justify-content-center align-items-center icon mr-2">

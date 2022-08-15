@@ -43,7 +43,7 @@
                                             <div class="mr-3"><span class="icon-layers"></span>
                                                 {{ ucWords($job->company->company_name) }}</div>
                                             <div><span class="icon-my_location"></span>
-                                                <span>{{ ucWords($job->company->company_address) }}</span>
+                                                <span>{{ ucWords($job->address) }}</span>
                                             </div>
                                         </div>
                                     </div>

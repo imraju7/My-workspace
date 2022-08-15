@@ -21,8 +21,8 @@ class HomeController extends Controller
             'pageTitle' => 'Homepage',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'vacancies' => Vacancy::count(),
-            'jobs' => Vacancy::orderBy('id','desc')->limit(5)->get(),
+            'vacancies' => Vacancy::where('is_published', true)->count(),
+            'jobs' => Vacancy::orderBy('id', 'desc')->where('is_published', true)->limit(5)->get(),
             'setting' => $setting
         ];
         return view('home', compact('data'));

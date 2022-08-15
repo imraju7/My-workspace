@@ -10,7 +10,7 @@
                     <span class="bg-success text-white badge py-2 px-3">{{ ucfirst($data['job']->job_type) }}</span>
                     <br>
                     <h2></h2>
-                    <p>{{ $data['job']->description }}</p>
+                    <p>{!! $data['job']->description !!}</p>
                     <div class="col-lg-8">
                         <form action="{{ route('jobs.feedback.create', $data['job']->id) }}" method="POST">
                             @csrf
@@ -45,9 +45,9 @@
                                     class="btn btn-secondary py-2 px-4">Apply</button></p>
                         </form>
                     @endif
-                    <h3 class="h5 text-black mb-3">Company Contact Info</h3>
-                    <p class="mb-0 font-weight-bold">Address</p>
-                    <p class="mb-4">{{ $data['job']->company->company_address }}</p>
+                    <h3 class="h5 text-black mb-3">Information</h3>
+                    <p class="mb-0 font-weight-bold">Job Location</p>
+                    <p class="mb-4">{{ $data['job']->address }}</p>
 
                     <p class="mb-0 font-weight-bold">Phone</p>
                     <p class="mb-4"><a href="#">{{ $data['job']->company->company_phone }}</a></p>

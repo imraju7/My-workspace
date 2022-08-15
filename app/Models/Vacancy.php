@@ -12,7 +12,7 @@ class Vacancy extends Model
     protected $table = 'vacancies';
 
     protected $fillable = [
-        'customer_id', 'title', 'description', 'is_vacant', 'job_type', 'expires_on', 'views'
+        'customer_id', 'title', 'description', 'address', 'is_vacant', 'job_type', 'expires_on', 'views', 'is_published'
     ];
 
     public function company()
@@ -22,11 +22,11 @@ class Vacancy extends Model
 
     public function application()
     {
-        return $this->hasOne(Application::class, 'vacancy_id','id');
+        return $this->hasOne(Application::class, 'vacancy_id', 'id');
     }
 
     public function hasApplied()
     {
-        return $this->application()->where('user_id',auth()->user()->id);
+        return $this->application()->where('user_id', auth()->user()->id);
     }
 }

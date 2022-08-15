@@ -15,6 +15,13 @@
                     <form action="{{ route('jobs.edit', $data['job']->id) }}" method="POST" class="p-5 bg-white">
                         @csrf
                         <div class="row form-group">
+                            <div class="col-md-12">
+                                <a href="{{ route('my-jobs') }}"> <button type="button"
+                                        class="btn btn-danger  py-2 px-5">Go Back </button> </a>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
                                 <label class="font-weight-bold" for="title">Job Title</label>
                                 <input type="text" id="title" name="title" value="{{ $data['job']->title }}"
@@ -24,6 +31,18 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="font-weight-bold" for="title">Job Location</label>
+                                <input type="text" id="address" name="address" value="{{ $data['job']->address }}"
+                                    class="form-control" placeholder="eg.sydney">
+                                @error('address')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row form-group">
                             <div class="col-md-12">
                                 <h3>Job Type</h3>
@@ -64,8 +83,20 @@
                                 <h3>Describe the job requirements</h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <textarea name="description" placeholder="" class="form-control" id="" cols="30" rows="5">{{ $data['job']->description }}</textarea>
+                                <textarea name="description" placeholder="" class="form-control description" id="" cols="30"
+                                    rows="5">{{ $data['job']->description }}</textarea>
                                 @error('description')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="font-weight-bold text-center" for="is_published">Published</label>
+                                <input type="checkbox" id="is_published" name="is_published"
+                                    @if ($data['job']->is_published) @checked(true) @endif class="form-control">
+                                @error('is_published')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
                             </div>

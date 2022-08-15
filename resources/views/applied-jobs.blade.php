@@ -20,16 +20,22 @@
                                             <div class="job-post-item-header d-flex align-items-center">
                                                 <h2 class="mr-3 text-black">{{ $application->vacancy->title }}
                                                 </h2>
-                                                {{-- <div class="badge-wrap">
-                                                <span
-                                                    class="bg-primary text-white badge py-2 px-3">{{ ucfirst($applicant->job_type) }}</span>
-                                            </div> --}}
+                                                @if ($application->is_accepted)
+                                                    <div class="badge-wrap">
+                                                        <span class="bg-success text-white badge py-2 px-3">Accepted</span>
+                                                    </div>
+                                                @endif
+                                                @if ($application->is_rejected)
+                                                <div class="badge-wrap">
+                                                    <span class="bg-danger text-white badge py-2 px-3">Rejected</span>
+                                                </div>
+                                            @endif
                                             </div>
                                             <div class="job-post-item-body d-block d-md-flex">
                                                 <div class="mr-3"><span class="icon-building"></span>
                                                     {{ ucWords($application->vacancy->company->company_name) }}</div>
                                                 <div class="mr-3"><span class="icon-my_location"></span>
-                                                    <span>{{ $application->vacancy->company->company_address }}</span>
+                                                    <span>{{ $application->vacancy->address }}</span>
                                                 </div>
                                                 <div><span class="icon-mail_outline"></span>
                                                     <span>{{ $application->vacancy->company->company_email }}</span>
@@ -46,12 +52,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><!-- end -->
+                                </div>
                             @endforeach
                         @else
                             <div class="col-md-12 ftco-animate">
                                 <p style="color: red;">No Applied jobs at the moment !</p>
-                            </div><!-- end -->
+                            </div>
                         @endif
                     </div>
                 </div>

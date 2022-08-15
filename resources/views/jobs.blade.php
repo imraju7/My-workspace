@@ -41,8 +41,7 @@
                                             @auth
                                                 @if ($job->hasApplied)
                                                     <div class="badge-wrap">
-                                                        <span
-                                                            class="bg-danger text-white badge pl-2 py-2 px-3">Applied</span>
+                                                        <span class="bg-danger text-white badge pl-2 py-2 px-3">Applied</span>
                                                     </div>
                                                 @endif
                                             @endauth
@@ -51,7 +50,7 @@
                                             <div class="mr-3"><span class="icon-layers"></span>
                                                 {{ ucWords($job->company->company_name) }}</div>
                                             <div><span class="icon-my_location"></span>
-                                                <span>{{ ucWords($job->company->company_address) }}</span>
+                                                <span>{{ ucWords($job->address) }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -60,12 +59,12 @@
                                         <div>
                                             <a href="{{ route('jobs.detail', $job->id) }}"
                                                 class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                                <span class="icon-eye" title="View"></span>
+                                                <button type="button" class="btn btn-primary py-2">View</button>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- end -->
+                            </div>
                         @endforeach
                     </div>
                     {{ $data['jobs']->links('partials.paginate') }}

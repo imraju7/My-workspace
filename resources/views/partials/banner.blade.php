@@ -34,7 +34,7 @@
                                                         <div class="form-field">
                                                             <div class="icon"><span class="icon-briefcase"></span>
                                                             </div>
-                                                            <input type="text" name="title" id="title"
+                                                            <input type="text" name="title" id="title" required
                                                                 class="form-control" placeholder="eg. Garphics">
                                                         </div>
                                                     </div>
@@ -54,6 +54,16 @@
                                                                     <option value="contract">Contract</option>
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md mr-md-2">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="icon"><span class="icon-map-marker"></span>
+                                                            </div>
+                                                            <input type="text" name="address" class="form-control"
+                                                                placeholder="Location">
                                                         </div>
                                                     </div>
                                                 </div>
