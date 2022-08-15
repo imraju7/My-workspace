@@ -44,6 +44,32 @@
 
                         <div class="row form-group">
                             <div class="col-md-12">
+                                <h3>Write your skills separated by comma here <span style="color: red;">*</span></h3>
+                            </div>
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <textarea name="skills" placeholder="php,laravel,node-js,c#,javascript,css,html" class="form-control" id=""
+                                    cols="30" rows="5">{{ $profile['skills'] }}</textarea>
+                                @error('skills')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <h3>Write the degrees you have here i.e Academic Qualifications <span
+                                        style="color: red;">*</span></h3>
+                            </div>
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <textarea name="educational_qualifications" placeholder="BBA,B-TECH,MCA,CSIT,HACKING,NETWORKING" class="form-control"
+                                    id="" cols="30" rows="5">{{ $profile['educational_qualifications'] }}</textarea>
+                                @error('educational_qualifications')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12">
                                 <input type="submit" value="Update" class="btn btn-primary  py-2 px-5">
                             </div>
                         </div>

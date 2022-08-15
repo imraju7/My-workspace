@@ -67,12 +67,15 @@ class KycController extends Controller
     public function candidate_verify(Request $request)
     {
         $this->validate($request, [
-            'address' => 'required|string'
+            'address' => 'required|string',
+            'skills' => 'required|string'
         ]);
 
         Candidate::create([
             'user_id' => auth()->user()->id,
-            'address' => $request->address
+            'address' => $request->address,
+            'skills' => $request->skills,
+            'educational_qualifications' => $request->educational_qualifications
         ]);
 
         return redirect()->route('homepage')->with('success', 'You just unlocked the feature to apply for the jobs you like !');

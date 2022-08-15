@@ -12,7 +12,7 @@ class Candidate extends Model
     protected $table = 'candidates';
 
     protected $fillable = [
-        'user_id', 'address', 'is_recruited', 'recruited_by'
+        'user_id', 'address', 'skills', 'educational_qualifications', 'is_recruited', 'recruited_by'
     ];
 
     public function user()
