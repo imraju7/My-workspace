@@ -56,7 +56,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12">
-                                <h3>Write the degrees you have here i.e Academic Qualifications <span
+                                <h3>Write your degrees and certifications separated by comma here i.e Academic Qualifications <span
                                         style="color: red;">*</span></h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">

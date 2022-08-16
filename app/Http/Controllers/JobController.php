@@ -59,6 +59,7 @@ class JobController extends Controller
     public function detail($id)
     {
         $job = Vacancy::findOrFail($id)->load('company');
+        $application = Application::where('vacancy_id', $job->id)->where('user_id', auth()->user()->id)->first();
         $setting = Setting::first();
         $data = [
             'pageTitle' => 'Job Detail',
@@ -66,7 +67,9 @@ class JobController extends Controller
             'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
             'job' => $job,
             'setting' => $setting,
-            'applied' => Application::where('vacancy_id', $job->id)->where('user_id', auth()->user()->id)->first() ? true : false
+            'applied' => $application ? true : false,
+            'accepted' => $application->is_accepted ?? false,
+            'rejected' => $application->is_rejected ?? false
         ];
 
         return view('job-detail', compact('data'));

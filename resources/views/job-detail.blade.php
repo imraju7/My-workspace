@@ -4,10 +4,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-8 mb-5">
+                    <br>
                     <h1>{{ ucfirst($data['job']->title) }}</h1>
                     <h4>By : {{ ucfirst($data['job']->company->company_name) }}
                         ({{ ucfirst($data['job']->company->type->name) }})</h4>
                     <span class="bg-success text-white badge py-2 px-3">{{ ucfirst($data['job']->job_type) }}</span>
+                    @if ($data['applied'])
+                        @if ($data['accepted'])
+                            <p><button disabled href="#" class="btn btn-success mt-4 py-2 px-4">Accepted</button></p>
+                        @elseif ($data['rejected'])
+                            <p><button disabled href="#" class="btn btn-danger mt-4 py-2 px-4">Rejected</button></p>
+                        @else
+                            <p><button disabled href="#" class="btn btn-warning mt-4 py-2 px-4">Applied</button></p>
+                        @endif
+                    @endif
                     <br>
                     <h2></h2>
                     <p>{!! $data['job']->description !!}</p>
@@ -29,7 +39,7 @@
 
                 <div class="col-lg-4">
                     @if ($data['applied'])
-                        <p><button disabled href="#" class="btn btn-danger mt-4 py-2 px-4">Applied</button></p>
+                        <br>
                     @else
                         <form action="{{ route('jobs.apply', $data['job']->id) }}" method="POST"
                             enctype="multipart/form-data" class="p-5 bg-white">

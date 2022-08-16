@@ -11,11 +11,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) {
-            if (auth()->user()->role->name == 'customer') {
-                return redirect()->route('my-jobs');
-            }
-        }
         $setting = Setting::first();
         $data = [
             'pageTitle' => 'Homepage',

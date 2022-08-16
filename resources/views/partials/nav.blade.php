@@ -24,6 +24,8 @@
                 @endcandidate
 
                 @customer
+                    <li class="nav-item {{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('homepage') }}"
+                            class="nav-link">Home</a></li>
                     <li class="nav-item {{ Request::is('my-jobs/*') || Request::is('my-jobs') ? 'active' : '' }} "><a
                             href="{{ route('my-jobs') }}" class="nav-link">My Jobs</a></li>
                 @endcustomer
@@ -47,7 +49,8 @@
                     <a href="{{ route('jobs.applied') }}" class="nav-link "><span class="icon-briefcase"
                             title="Applied Jobs"></span></a>
                 </li>
-                <li class="nav-item cta mr-md-1 "><a href="{{ route('find-a-job') }}" class="nav-link">Find a Job</a></li>
+                <li class="nav-item cta mr-md-1 "><a href="{{ route('find-a-job') }}" class="nav-link">Find a Job</a>
+                </li>
                 @endcandidate
 
                 @customer

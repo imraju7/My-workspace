@@ -38,7 +38,9 @@ class ProfileController extends Controller
             $profile = [
                 'name' => $user->name,
                 'email' => $user->email,
-                'address' => $user->candidate->address
+                'address' => $user->candidate->address,
+                'skills' => $user->candidate->skills,
+                'educational_qualifications' => $user->candidate->educational_qualifications
             ];
         }
         return view('profile', compact('data', 'profile'));
@@ -51,14 +53,18 @@ class ProfileController extends Controller
             $this->validate($request, [
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users,email,' . $user->id,
-                'address' => 'required|string'
+                'address' => 'required|string',
+                'skills' => 'required|string',
+                'educational_qualifications' => 'required|string'
             ]);
             User::find($user->id)->update([
                 'name' => $request->name,
                 'email' => $request->email
             ]);
             Candidate::where('id', $user->candidate->id)->update([
-                'address' => $request->address
+                'address' => $request->address,
+                'skills' => $request->skills,
+                'educational_qualifications' => $request->educational_qualifications
             ]);
         } else {
             $this->validate($request, [
