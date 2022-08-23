@@ -78,49 +78,6 @@
                                             </div>
                                         </form>
                                     </div>
-
-                                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel"
-                                        aria-labelledby="v-pills-performance-tab">
-                                        <form action="{{ route('jobs.search') }}" method="GET" class="search-job">
-                                            <div class="row">
-                                                <div class="col-md">
-                                                    <div class="form-group">
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="icon-user"></span></div>
-                                                            <input type="text" name="title" id="title"
-                                                                class="form-control" placeholder="eg. Adam Scott">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md">
-                                                    <div class="form-group">
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span
-                                                                        class="ion-ios-arrow-down"></span></div>
-                                                                <select name="job_type" id="job_type"
-                                                                    class="form-control">
-                                                                    <option value="">Type</option>
-                                                                    <option value="full-time">Full Time</option>
-                                                                    <option value="part-time">Part Time</option>
-                                                                    <option value="casual">Casual</option>
-                                                                    <option value="contract">Contract</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md">
-                                                    <div class="form-group">
-                                                        <div class="form-field">
-                                                            <button type="submit"
-                                                                class="form-control btn btn-secondary">Search</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
                         </div>

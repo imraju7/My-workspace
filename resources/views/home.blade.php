@@ -13,7 +13,15 @@
         @include('partials.candidate-search')
     @endcustomer
 
+    @candidate
     @if (count($data['jobs']) != 0)
         @include('partials.hot-jobs')
     @endif
+    @endcandidate
+
+    @guest
+        @if (count($data['jobs']) != 0)
+            @include('partials.hot-jobs')
+        @endif
+    @endguest
 @endsection

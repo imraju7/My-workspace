@@ -5,7 +5,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
 @endpush
 
-
 @section('content')
     <div class="ftco-section bg-light">
         <div class="container">
@@ -93,9 +92,10 @@
 
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold text-center" for="is_published">Published</label>
-                                <input type="checkbox" id="is_published" name="is_published"
-                                    @if ($data['job']->is_published) @checked(true) @endif class="form-control">
+                                <label for="is_published">
+                                    <input type="checkbox" id="is_published" name="is_published"
+                                        @if ($data['job']->is_published) @checked(true) @endif> Published
+                                </label>
                                 @error('is_published')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror

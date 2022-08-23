@@ -11,6 +11,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Middleware\HasVerifiedKyc;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -66,6 +67,8 @@ Route::get('about-us', [AboutController::class, 'index'])->name('about');
 Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
+Route::get('candidates/search', [CandidateController::class, 'search'])->name('candidates.search');
+
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -94,7 +97,7 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 
         // for candidate
         Route::get('applied-jobs', [JobController::class, 'applied_jobs'])->name('jobs.applied');
-        
+
         // for customer
         Route::get('my-jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
 

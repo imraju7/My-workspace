@@ -15,7 +15,8 @@
                         @csrf
                         <div class="row form-group">
                             <div class="col-md-12">
-                               <a href="{{route('my-jobs')}}"> <button type="button" class="btn btn-danger  py-2 px-5">Go Back </button> </a>
+                                <a href="{{ route('my-jobs') }}"> <button type="button"
+                                        class="btn btn-danger  py-2 px-5">Go Back </button> </a>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -82,17 +83,16 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row form-group">
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <label class="font-weight-bold" for="title">Published</label>
-                                <input type="checkbox" id="is_published" name="is_published" class="form-control">
+                                <label for="is_published">
+                                    <input type="checkbox" id="is_published" name="is_published"> Published
+                                </label>
                                 @error('is_published')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row form-group">
                             <div class="col-md-12">
                                 <input type="submit" value="Post" class="btn btn-primary  py-2 px-5">

@@ -21,6 +21,10 @@
                                                     href="{{ route('jobs.applicants', $job->id) }}">{{ ucWords($job->title) }}</a>
                                             </h2>
                                             <div class="badge-wrap">
+                                                @if (!$job->is_published)
+                                                    <span
+                                                        class="bg-danger text-white badge py-2 px-3">unpublished</span>
+                                                @endif
                                                 @if ($job->job_type == 'part-time')
                                                     <span
                                                         class="bg-primary text-white badge py-2 px-3">{{ ucfirst($job->job_type) }}</span>
