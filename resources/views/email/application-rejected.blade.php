@@ -62,7 +62,7 @@
                                             Oooopsies!</h1>
                                         <p
                                             style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                            Your Job application have been rejected by
+                                            {{ $custom_message}}
                                             <br>
                                             Company Name : {{ $company_name }}
                                         </p>

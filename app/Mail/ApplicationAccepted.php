@@ -12,11 +12,13 @@ class ApplicationAccepted extends Mailable
     use Queueable, SerializesModels;
 
     public $company_name;
+    public $custom_message;
 
 
-    public function __construct($company_name)
+    public function __construct($company_name,$custom_message)
     {
         $this->company_name = $company_name;
+        $this->custom_message = $custom_message;
     }
 
     /**

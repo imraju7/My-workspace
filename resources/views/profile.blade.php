@@ -1,5 +1,39 @@
 @extends('layouts.app')
 @section('content')
+    @push('styles')
+        <style>
+            .tags-input-wrapper {
+                background: #f9f9f9;
+                padding: 10px;
+                border-radius: 4px;
+                max-width: 400px;
+                border: 1px solid #ccc
+            }
+
+            .tags-input-wrapper input {
+                border: none;
+                background: transparent;
+                outline: none;
+                width: 150px;
+            }
+
+            .tags-input-wrapper .tag {
+                display: inline-block;
+                background-color: #009432;
+                color: white;
+                border-radius: 40px;
+                padding: 0px 3px 0px 7px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+
+            .tags-input-wrapper .tag a {
+                margin: 0 7px 3px;
+                display: inline-block;
+                cursor: pointer;
+            }
+        </style>
+    @endpush
     <div class="ftco-section bg-light">
         <div class="container">
             <div class="row">
@@ -47,8 +81,9 @@
                                 <h3>Write your skills separated by comma here <span style="color: red;">*</span></h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <textarea name="skills" placeholder="php,laravel,node-js,c#,javascript,css,html" class="form-control" id=""
-                                    cols="30" rows="5">{{ $profile['skills'] }}</textarea>
+                                <input type="text" name="skills" id="skills"
+                                    placeholder="php,laravel,node-js,c#,javascript,css,html" class="form-control"
+                                    cols="30" rows="5">
                                 @error('skills')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
@@ -56,12 +91,13 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12">
-                                <h3>Write your degrees and certifications separated by comma here i.e Academic Qualifications <span
-                                        style="color: red;">*</span></h3>
+                                <h3>Write your degrees and certifications separated by comma here i.e Academic
+                                    Qualifications <span style="color: red;">*</span></h3>
                             </div>
                             <div class="col-md-12 mb-3 mb-md-0">
-                                <textarea name="educational_qualifications" placeholder="BBA,B-TECH,MCA,CSIT,HACKING,NETWORKING" class="form-control"
-                                    id="" cols="30" rows="5">{{ $profile['educational_qualifications'] }}</textarea>
+                                <input type="text" name="educational_qualifications"
+                                    placeholder="BBA,B-TECH,MCA,CSIT,HACKING,NETWORKING" class="form-control"
+                                    id="educational_qualifications" cols="30" rows="5">
                                 @error('educational_qualifications')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
@@ -208,6 +244,26 @@
             </div>
         </div>
     </div>
+    @php
+    function addQuotes($string)
+    {
+        return '"' . implode('","', explode(',', $string)) . '"';
+    }
+    @endphp
+    @push('scripts')
+        <script src="{{ asset('tagplug-master/index.js') }}"></script>
+        <script>
+            var tagInput1 = new TagsInput({
+                selector: 'skills',
+                max: 10
+            });
+            tagInput1.addData([@php echo addQuotes($profile['skills']); @endphp])
 
-    {{-- @include('partials.newsletter') --}}
+            var tagInput2 = new TagsInput({
+                selector: 'educational_qualifications',
+                max: 10
+            });
+            tagInput2.addData([@php echo addQuotes($profile['educational_qualifications']); @endphp])
+        </script>
+    @endpush
 @endsection

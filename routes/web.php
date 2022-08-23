@@ -101,6 +101,11 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
         // for customer
         Route::get('my-jobs/application/download/{id}', [JobController::class, 'download_cv'])->name('jobs.applicants.download');
 
+        Route::get('my-jobs/application/{id}/application-action', [JobController::class, 'application_action'])->name('jobs.applicants.application-action');
+
+        Route::post('my-jobs/application/{id}/application-action', [JobController::class, 'post_application_action']);
+
+
         Route::post('my-jobs/application/{id}/accept', [JobController::class, 'accept'])->name('jobs.applicants.accept');
 
         Route::post('my-jobs/application/{id}/reject', [JobController::class, 'reject'])->name('jobs.applicants.reject');

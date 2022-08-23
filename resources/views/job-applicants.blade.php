@@ -26,10 +26,10 @@
                                                     </div>
                                                 @endif
                                                 @if ($applicant->is_rejected)
-                                                <div class="badge-wrap">
-                                                    <span class="bg-danger text-white badge py-2 px-3">Rejected</span>
-                                                </div>
-                                            @endif
+                                                    <div class="badge-wrap">
+                                                        <span class="bg-danger text-white badge py-2 px-3">Rejected</span>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="job-post-item-body d-block d-md-flex">
                                                 <div class="mr-3"><span class="icon-my_location"></span>
@@ -42,34 +42,18 @@
                                         </div>
 
                                         <div class="one-forth ml-auto d-flex align-items-center">
-                                            <div>
+                                            <div class="mr-2">
                                                 <a href="{{ route('jobs.applicants.message', ['job_id' => $data['vacancy']->id, 'applicant_id' => $applicant->id]) }}"
                                                     class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                                     <span class="icon-envelope" title="Message"></span>
                                                 </a>
                                             </div>
-                                            @if (!$applicant->is_accepted && !$applicant->is_rejected)
-                                                <form method="POST"
-                                                    action="{{ route('jobs.applicants.accept', $applicant->id) }}">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        onclick="return confirm('Are you sure you want to Accept this candidate?');"
-                                                        class=" mr-2 btn btn-primary py-2">Accept</button>
-                                                </form>
-                                            @endif
-                                            @if (!$applicant->is_rejected && !$applicant->is_accepted)
-                                                <form method="POST"
-                                                    action="{{ route('jobs.applicants.reject', $applicant->id) }}">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        onclick="return confirm('Are you sure you want to Reject this candidate?');"
-                                                        class="btn btn-danger py-2">Reject</button>
-                                                </form>
-                                            @endif
+                                            <a href="{{ route('jobs.applicants.application-action', $applicant->id) }}"><button
+                                                    type="submit" class=" mr-2 btn btn-secondary py-2">View</button></a>
                                             <div class="ml-2">
                                                 <a href="{{ route('jobs.applicants.download', $applicant->id) }}"
                                                     class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                                    <span class="icon-download" title="View Applications"></span>
+                                                    <span class="icon-download" title="Download Application"></span>
                                                 </a>
                                             </div>
                                         </div>

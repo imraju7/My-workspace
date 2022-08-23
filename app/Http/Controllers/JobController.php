@@ -205,22 +205,49 @@ class JobController extends Controller
         return response()->download(public_path('uploads/' . $application->file));
     }
 
-    public function accept($id)
+    public function application_action($id)
+    {
+        $setting = Setting::first();
+
+        $applicant = Application::findOrFail($id);
+
+        $data = [
+            'pageTitle' => 'Applications',
+            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+            'setting' => $setting,
+            'applicant' => $applicant
+        ];
+
+        return view('hireOrReject', compact('data'));
+    }
+
+    public function post_application_action(Request $request, $id)
+    {
+        if ($request->action == 'Accept') {
+            $this->accept($id, $request->message ?? 'You have been selected for the next phase of the job interview.');
+        return redirect()->back()->with('success', 'Application accepted and the candidate is mailed to get prepared for the next phase !');
+        }
+        if ($request->action == 'Reject') {
+            $this->reject($id, $request->message ?? 'Your Job application have been rejected.');
+        return redirect()->back()->with('success', 'Application rejected !');
+        }
+    }
+
+    public function accept($id, $custom_message)
     {
         $applicant = Application::findOrFail($id);
         $applicant->is_accepted = true;
         $applicant->save();
-        Mail::to($applicant->user->email)->send(new ApplicationAccepted($applicant->vacancy->company->company_name));
-        return redirect()->back()->with('success', 'Application accepted and the candidate is mailed to get prepared for the next phase !');
+        Mail::to($applicant->user->email)->send(new ApplicationAccepted($applicant->vacancy->company->company_name, $custom_message));
     }
 
-    public function reject($id)
+    public function reject($id, $custom_message)
     {
         $applicant = Application::findOrFail($id);
         $applicant->is_rejected = true;
         $applicant->save();
-        Mail::to($applicant->user->email)->send(new ApplicationRejected($applicant->vacancy->company->company_name));
-        return redirect()->back()->with('success', 'Application rejected !');
+        Mail::to($applicant->user->email)->send(new ApplicationRejected($applicant->vacancy->company->company_name, $custom_message));
     }
 
     // for candidate
