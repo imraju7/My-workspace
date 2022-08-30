@@ -226,11 +226,11 @@ class JobController extends Controller
     {
         if ($request->action == 'Accept') {
             $this->accept($id, $request->message ?? 'You have been selected for the next phase of the job interview.');
-        return redirect()->back()->with('success', 'Application accepted and the candidate is mailed to get prepared for the next phase !');
+            return redirect()->back()->with('success', 'Application accepted and the candidate is mailed to get prepared for the next phase !');
         }
         if ($request->action == 'Reject') {
             $this->reject($id, $request->message ?? 'Your Job application have been rejected.');
-        return redirect()->back()->with('success', 'Application rejected !');
+            return redirect()->back()->with('success', 'Application rejected !');
         }
     }
 

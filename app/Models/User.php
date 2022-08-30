@@ -8,16 +8,31 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
 
     protected $fillable = ['name', 'email', 'password', 'role_id', 'is_banned'];
 
     protected $hidden = ['password', 'remember_token',];
+
+    public function registerMediaCollections(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(50)
+            ->height(50)
+            ->nonQueued();
+        $this
+            ->addMediaCollection('avatar')
+            ->singleFile();
+    }
 
     public function canAccessFilament(): bool
     {

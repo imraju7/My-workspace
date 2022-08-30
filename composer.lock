@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbef022b5b11ac1a7d410224309cf7f8",
+    "content-hash": "40c667429baaab81e370a6c628b37775",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -4527,16 +4527,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "10.4.1",
+            "version": "10.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "cfab5c62ec09c2a59df745e451d6559e3b55966b"
+                "reference": "e66c599717e96e692c3abc506a7a2a3760c952ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/cfab5c62ec09c2a59df745e451d6559e3b55966b",
-                "reference": "cfab5c62ec09c2a59df745e451d6559e3b55966b",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/e66c599717e96e692c3abc506a7a2a3760c952ab",
+                "reference": "e66c599717e96e692c3abc506a7a2a3760c952ab",
                 "shasum": ""
             },
             "require": {
@@ -4619,7 +4619,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.4.1"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.4.4"
             },
             "funding": [
                 {
@@ -4631,7 +4631,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-24T14:49:01+00:00"
+            "time": "2022-08-22T09:17:01+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

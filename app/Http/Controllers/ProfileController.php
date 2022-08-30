@@ -43,7 +43,7 @@ class ProfileController extends Controller
                 'educational_qualifications' => $user->candidate->educational_qualifications
             ];
         }
-        return view('profile', compact('data', 'profile'));
+        return view('profile', compact('data', 'profile', 'user'));
     }
 
     public function update(Request $request)
@@ -57,10 +57,16 @@ class ProfileController extends Controller
                 'skills' => 'required|string',
                 'educational_qualifications' => 'required|string'
             ]);
+
             User::find($user->id)->update([
                 'name' => $request->name,
                 'email' => $request->email
             ]);
+
+            if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatar');
+            }
+
             Candidate::where('id', $user->candidate->id)->update([
                 'address' => $request->address,
                 'skills' => $request->skills,
@@ -93,7 +99,6 @@ class ProfileController extends Controller
 
     public function resetPassword(Request $request)
     {
-        // return bcrypt('password');
         if (!Hash::check($request->password, auth()->user()->password)) {
             return redirect()->back()->with("error", "Your current password does not match with the password.");
         }

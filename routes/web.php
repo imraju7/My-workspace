@@ -68,6 +68,7 @@ Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
 Route::get('candidates/search', [CandidateController::class, 'search'])->name('candidates.search');
+Route::post('candidates/search/{candidate_id}', [CandidateController::class, 'mail_candidate'])->name('candidates.search.mail');
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 

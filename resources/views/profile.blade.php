@@ -40,7 +40,8 @@
                 <div class="col-md-12 col-lg-8 mb-5">
                     <h1>Edit Your Profile</h1>
                     @candidate
-                    <form action="{{ route('profile.update') }}" method="POST" class="p-5 bg-white">
+                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data"
+                        class="p-5 bg-white">
                         @csrf
                         <input type="hidden" name="user_type" value="candidate">
                         <div class="row form-group">
@@ -49,6 +50,22 @@
                                 <input type="text" id="name" name="name" value="{{ $profile['name'] }}"
                                     class="form-control">
                                 @error('name')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <img src="{{ $user->getFirstMediaUrl('avatar', 'thumb') }}">
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12 mb-3 mb-md-0">
+                                <label class="font-weight-bold" for="name">Profile Avatar</label>
+                                <input type="file" id="avatar" name="avatar" class="form-control">
+                                @error('avatar')
                                     <span style="color: red;">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -244,6 +261,7 @@
             </div>
         </div>
     </div>
+    @candidate
     @php
     function addQuotes($string)
     {
@@ -266,4 +284,5 @@
             tagInput2.addData([@php echo addQuotes($profile['educational_qualifications']); @endphp])
         </script>
     @endpush
+    @endcandidate
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Candidate;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CandidateSearchMail;
 
 class CandidateController extends Controller
 {
@@ -28,5 +30,19 @@ class CandidateController extends Controller
             'setting' => $setting
         ];
         return view('candidates', compact('data'));
+    }
+
+    public function mail_candidate(Request $request, $candidate_id)
+    {
+        if ($request->filled('message')) {
+            $message = $request->message;
+            $candidate = Candidate::findOrFail($candidate_id);
+            $mail = $candidate->user->email;
+            $company_name = auth()->user()->customer->company_name;
+            $candidate_name = $candidate->user->name;
+            Mail::to($mail)->send(new CandidateSearchMail($candidate_name, $message, $company_name));
+            return redirect()->back()->with('success', 'Mail sent to candidate successfully');
+        }
+        return redirect()->back()->with('warning', 'Mail is empty ! ');
     }
 }

@@ -29,6 +29,10 @@ class LoginController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            if (auth()->user()->is_banned) {
+                Auth::logout();
+                return redirect()->route('login')->with('banned', 'You have been banned from using the application. Contact admin for further support or inquiry.');
+            }
             return redirect()->intended()
                 ->withSuccess('You have Successfully logged in');
         }

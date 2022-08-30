@@ -28,15 +28,16 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="one-forth ml-auto d-flex align-items-center">
-                                        <div>
-                                            <a href="{{ route('jobs.detail', $candidate->id) }}"
-                                                class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                                <button type="button" class="btn btn-primary py-2">View</button>
-                                            </a>
+                                    <form method="POST" action="{{ route('candidates.search.mail', $candidate->id) }}">
+                                        @csrf
+                                        <input type="text" id="message" name="message"
+                                            placeholder="Your Mail Message here" class="form-control mr-4 mb-2 mt-2">
+                                        <div class="one-forth ml-auto d-flex align-items-center">
+                                            <div>
+                                                <button type="submit" class="btn btn-primary p-2">Send</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
