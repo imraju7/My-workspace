@@ -57,7 +57,7 @@
                     @endif
                     <h3 class="h5 text-black mb-3">Information</h3>
                     <p class="mb-0 font-weight-bold">Job Location</p>
-                    <p class="mb-4">{{ $data['job']->address }}</p>
+                    <p class="mb-4">{{ $data['job']->company->company_address }}</p>
 
                     <p class="mb-0 font-weight-bold">Phone</p>
                     <p class="mb-4"><a href="#">{{ $data['job']->company->company_phone }}</a></p>

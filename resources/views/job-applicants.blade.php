@@ -18,6 +18,8 @@
                                     <div class="job-post-item py-4 d-block d-lg-flex align-items-center">
                                         <div class="one-third mb-4 mb-md-0">
                                             <div class="job-post-item-header d-flex align-items-center">
+                                                <img class="p-1" width="50px" height="50px"
+                                                    src="{{ $applicant->user->getFirstMediaUrl('avatar', 'thumb') }}">
                                                 <h2 class="mr-3 text-black">{{ ucwords($applicant->user->name) }}
                                                 </h2>
                                                 @if ($applicant->is_accepted)
@@ -58,12 +60,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><!-- end -->
+                                </div>
                             @endforeach
                         @else
                             <div class="col-md-12 ftco-animate">
                                 <p style="color: red;">No Applicants at the moment !</p>
-                            </div><!-- end -->
+                            </div>
                         @endif
                     </div>
                 </div>

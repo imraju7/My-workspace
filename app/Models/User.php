@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
             ->nonQueued();
         $this
             ->addMediaCollection('avatar')
+            ->useFallbackUrl(asset('dummy.png'))
             ->singleFile();
     }
 
