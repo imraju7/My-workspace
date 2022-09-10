@@ -22,6 +22,10 @@ class Setting extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this
+            ->addMediaCollection('default')
+            ->useFallbackUrl('' . url('') . 'default.png')
+            ->useFallbackPath(public_path('default.png'));
+        $this
             ->addMediaConversion('favicon')
             ->width(16)
             ->height(16)

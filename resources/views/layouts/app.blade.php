@@ -141,6 +141,42 @@
         </script>
     @endif
 
+    @customer
+        <script type="text/javascript">
+            var initial_count = {{$data['initial_count']}};
+
+            function ajaxCallBack(data) {
+                initial_count = data;
+            }
+
+            function getApplication() {
+                $.ajax({
+                    initial_count: initial_count,
+                    url: '{{ route('count-applications', auth()->user()->customer->id) }}',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log('Initial count '+this.initial_count);
+                        if (data > this.initial_count) {
+                            ajaxCallBack(data);
+                            console.log('after callback')
+                                var message = "New Application";
+                                console.log('message');
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "showDuration": "1000",
+                                }
+                                toastr.warning(message);
+                            console.log('response '+data);
+                        }
+                    }
+                });
+            }
+            $(document).ready(function() {
+                setInterval(getApplication, 1000);
+            });
+        </script>
+    @endcustomer
+
 </body>
 
 </html>

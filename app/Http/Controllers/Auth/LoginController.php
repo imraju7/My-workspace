@@ -17,6 +17,7 @@ class LoginController extends Controller
             'pageTitle' => 'Login',
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+            'email' => optional($setting)->email ?? '',
         ];
         return view('auth.login', compact('data'));
     }

@@ -119,6 +119,9 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 
         Route::post('my-jobs/edit-a-job/{id}', [JobController::class, 'update']);
 
+        // get applications count
+        Route::get('count/applications/{customer_id}', [JobController::class, 'application_count'])->name('count-applications');
+
         // read feedbacks 
         Route::get('my-jobs/feedbacks/{id}', [JobController::class, 'feedbacks'])->name('jobs.feedbacks');
 

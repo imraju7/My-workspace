@@ -77,6 +77,12 @@
                         </label>
                     </div>
                     <div class="flex items-center justify-end mt-4">
+                        @if (session('banned'))
+                            <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"
+                                href="mailto:{{ $data['email'] }}">
+                                Contact Admin
+                            </a>
+                        @endif
                         <a class="underline text-sm pr-4 text-gray-600 hover:text-gray-900"
                             href="{{ route('register') }}">
                             Register ?

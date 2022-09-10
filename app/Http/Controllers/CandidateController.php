@@ -7,6 +7,9 @@ use App\Models\Candidate;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CandidateSearchMail;
+use App\Models\Application;
+use App\Models\Vacancy;
+use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
@@ -22,13 +25,25 @@ class CandidateController extends Controller
         } else {
             $candidates->where('skills', 'Like', '%' . $request->skill . '%');
         }
-        $data = [
-            'pageTitle' => 'Available Jobs',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'candidates' => $candidates->where('is_recruited', false)->orderBy('id', 'desc')->paginate(5),
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'candidates' => $candidates->where('is_recruited', false)->orderBy('id', 'desc')->paginate(5),
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'candidates' => $candidates->where('is_recruited', false)->orderBy('id', 'desc')->paginate(5),
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('candidates', compact('data'));
     }
 

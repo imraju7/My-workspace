@@ -13,19 +13,32 @@ use App\Models\VacancyFeedback;
 use App\Mail\ApplicationAccepted;
 use App\Mail\ApplicationRejected;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
     public function index()
     {
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'Available Jobs',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => Vacancy::where('is_published', true)->paginate(5),
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => Vacancy::where('is_published', true)->paginate(5),
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => Vacancy::where('is_published', true)->paginate(5),
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('jobs', compact('data'));
     }
 
@@ -46,13 +59,25 @@ class JobController extends Controller
         } else {
             $jobs->where('title', 'Like', '%' . $request->title . '%');
         }
-        $data = [
-            'pageTitle' => 'Available Jobs',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => $jobs->where('is_published', true)->orderBy('id', 'desc')->paginate(5),
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => $jobs->where('is_published', true)->orderBy('id', 'desc')->paginate(5),
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Available Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => $jobs->where('is_published', true)->orderBy('id', 'desc')->paginate(5),
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('jobs', compact('data'));
     }
 
@@ -61,16 +86,31 @@ class JobController extends Controller
         $job = Vacancy::findOrFail($id)->load('company');
         $application = Application::where('vacancy_id', $job->id)->where('user_id', auth()->user()->id)->first();
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'Job Detail',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize') ?? 'default.jpg',
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon') ?? 'favicon.jpg',
-            'job' => $job,
-            'setting' => $setting,
-            'applied' => $application ? true : false,
-            'accepted' => $application->is_accepted ?? false,
-            'rejected' => $application->is_rejected ?? false
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Job Detail',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'job' => $job,
+                'setting' => $setting,
+                'applied' => $application ? true : false,
+                'accepted' => $application->is_accepted ?? false,
+                'rejected' => $application->is_rejected ?? false,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Job Detail',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'job' => $job,
+                'setting' => $setting,
+                'applied' => $application ? true : false,
+                'accepted' => $application->is_accepted ?? false,
+                'rejected' => $application->is_rejected ?? false,
+                'initial_count' => 0
+            ];
+        }
 
         return view('job-detail', compact('data'));
     }
@@ -97,26 +137,50 @@ class JobController extends Controller
     public function myjobs()
     {
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'My Jobs',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5),
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'My Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5),
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'My Jobs',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5),
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('my-jobs', compact('data'));
     }
 
     public function create()
     {
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'Create a job',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'company' => Customer::where('user_id', auth()->user()->id)->first(),
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Create a job',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'company' => Customer::where('user_id', auth()->user()->id)->first(),
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Create a job',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'company' => Customer::where('user_id', auth()->user()->id)->first(),
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('post-job', compact('data'));
     }
 
@@ -146,14 +210,27 @@ class JobController extends Controller
     {
         $job = Vacancy::findOrFail($id);
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'Create a job',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'company' => Customer::where('user_id', auth()->user()->id)->first(),
-            'job' => $job,
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Create a job',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'company' => Customer::where('user_id', auth()->user()->id)->first(),
+                'job' => $job,
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Create a job',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'company' => Customer::where('user_id', auth()->user()->id)->first(),
+                'job' => $job,
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('edit-job', compact('data'));
     }
 
@@ -188,14 +265,27 @@ class JobController extends Controller
     {
         $vacancy = Vacancy::findorFail($id);
         $setting = Setting::first();
-        $data = [
-            'pageTitle' => 'Applications',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'applicants' => Application::where('vacancy_id', $vacancy->id)->get(),
-            'vacancy' => $vacancy,
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'applicants' => Application::where('vacancy_id', $vacancy->id)->get(),
+                'vacancy' => $vacancy,
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'applicants' => Application::where('vacancy_id', $vacancy->id)->get(),
+                'vacancy' => $vacancy,
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('job-applicants', compact('data'));
     }
 
@@ -210,14 +300,25 @@ class JobController extends Controller
         $setting = Setting::first();
 
         $applicant = Application::findOrFail($id);
-
-        $data = [
-            'pageTitle' => 'Applications',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'setting' => $setting,
-            'applicant' => $applicant
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'setting' => $setting,
+                'applicant' => $applicant,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'setting' => $setting,
+                'applicant' => $applicant,
+                'initial_count' => 0
+            ];
+        }
 
         return view('hireOrReject', compact('data'));
     }
@@ -258,13 +359,25 @@ class JobController extends Controller
 
         $applications = Application::with('vacancy')->where('user_id', auth()->user()->id)->get();
 
-        $data = [
-            'pageTitle' => 'Applications',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'setting' => $setting,
-            'applications' => $applications
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'setting' => $setting,
+                'applications' => $applications,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'Applications',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'setting' => $setting,
+                'applications' => $applications,
+                'initial_count' => 0
+            ];
+        }
 
         return view('applied-jobs', compact('data'));
     }
@@ -277,7 +390,8 @@ class JobController extends Controller
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
             'jobs' => Vacancy::paginate(5),
-            'setting' => $setting
+            'setting' => $setting,
+            'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
         ];
         return view('find-a-job', compact('data'));
     }
@@ -294,7 +408,8 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'feedbacks' => $feedbacks,
                 'vacancy' => $vacancy,
-                'setting' => $setting
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
             return view('job-feedbacks', compact('data'));
         }
@@ -314,5 +429,12 @@ class JobController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Thank you for your feedback.');
+    }
+
+    public function application_count($customer_id)
+    {
+        $ids = Vacancy::where('customer_id', $customer_id)->pluck('id');
+        $application_count = Application::whereIn('vacancy_id', $ids)->count();
+        return (int)$application_count;
     }
 }

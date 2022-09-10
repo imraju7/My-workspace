@@ -27,7 +27,8 @@ class MessageController extends Controller
                     'setting' => $setting,
                     'application' => $application,
                     'conversation' => $conversation,
-                    'job' => $job
+                    'job' => $job,
+                    'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id',Vacancy::where('customer_id',auth()->user()->customer->id)->pluck('id'))->count() : 0
                 ];
                 return view('customer-messages', compact('data'));
             }
@@ -75,7 +76,8 @@ class MessageController extends Controller
                 'setting' => $setting,
                 'application' => $application,
                 'conversation' => $conversation,
-                'job' => $job
+                'job' => $job,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id',Vacancy::where('customer_id',auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
             return view('candidate-messages', compact('data'));
         }

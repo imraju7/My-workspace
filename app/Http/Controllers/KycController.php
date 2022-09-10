@@ -7,6 +7,9 @@ use App\Models\CompanyType;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Setting;
+use App\Models\Application;
+use App\Models\Vacancy;
+use Illuminate\Support\Facades\Auth;
 
 class KycController extends Controller
 {
@@ -14,13 +17,25 @@ class KycController extends Controller
     {
         $setting = Setting::first();
         $companyTypes = CompanyType::all();
-        $data = [
-            'pageTitle' => 'kyc',
-            'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
-            'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
-            'companyTypes' => $companyTypes,
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'kyc',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'companyTypes' => $companyTypes,
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'kyc',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'companyTypes' => $companyTypes,
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('customer-kyc', compact('data'));
     }
 
@@ -54,13 +69,25 @@ class KycController extends Controller
     {
         $setting = Setting::first();
         $companyTypes = CompanyType::all();
-        $data = [
-            'pageTitle' => 'kyc',
-            'logo' => $setting->getFirstMedia()->getUrl('logosize'),
-            'favicon' => $setting->getFirstMedia()->getUrl('favicon'),
-            'companyTypes' => $companyTypes,
-            'setting' => $setting
-        ];
+        if (Auth::check()) {
+            $data = [
+                'pageTitle' => 'kyc',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'companyTypes' => $companyTypes,
+                'setting' => $setting,
+                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            ];
+        } else {
+            $data = [
+                'pageTitle' => 'kyc',
+                'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
+                'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
+                'companyTypes' => $companyTypes,
+                'setting' => $setting,
+                'initial_count' => 0
+            ];
+        }
         return view('candidate-kyc', compact('data'));
     }
 
