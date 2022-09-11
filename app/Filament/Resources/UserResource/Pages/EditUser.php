@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
+use App\Mail\UserBanned;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Pages\Actions\Action;
@@ -19,6 +20,14 @@ use App\Models\Vacancy;
 class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if ($data['is_banned']) {
+            Mail::to($this->data['email'])->send(new UserBanned($this->data['name']));
+        }
+        return $data;
+    }
 
     protected function getActions(): array
     {
