@@ -152,7 +152,7 @@
             function getApplication() {
                 $.ajax({
                     initial_count: initial_count,
-                    url: '{{ route('count-applications', auth()->user()->customer->id) }}',
+                    url: '{{ route('count-applications', auth()->user()->customer->id ?? '') }}',
                     type: 'GET',
                     success: function(data) {
                         console.log('Initial count '+this.initial_count);

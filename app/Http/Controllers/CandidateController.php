@@ -32,7 +32,7 @@ class CandidateController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'candidates' => $candidates->where('is_recruited', false)->orderBy('id', 'desc')->paginate(5),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [

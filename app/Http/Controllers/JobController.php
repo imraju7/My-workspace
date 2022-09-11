@@ -27,7 +27,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'jobs' => Vacancy::where('is_published', true)->paginate(5),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -66,7 +66,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'jobs' => $jobs->where('is_published', true)->orderBy('id', 'desc')->paginate(5),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -96,7 +96,7 @@ class JobController extends Controller
                 'applied' => $application ? true : false,
                 'accepted' => $application->is_accepted ?? false,
                 'rejected' => $application->is_rejected ?? false,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -144,7 +144,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'jobs' => Vacancy::where('customer_id', auth()->user()->customer->id)->paginate(5),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -169,7 +169,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'company' => Customer::where('user_id', auth()->user()->id)->first(),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -218,7 +218,7 @@ class JobController extends Controller
                 'company' => Customer::where('user_id', auth()->user()->id)->first(),
                 'job' => $job,
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -273,7 +273,7 @@ class JobController extends Controller
                 'applicants' => Application::where('vacancy_id', $vacancy->id)->get(),
                 'vacancy' => $vacancy,
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -307,7 +307,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'setting' => $setting,
                 'applicant' => $applicant,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -366,7 +366,7 @@ class JobController extends Controller
                 'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
                 'setting' => $setting,
                 'applications' => $applications,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [
@@ -391,7 +391,7 @@ class JobController extends Controller
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
             'jobs' => Vacancy::paginate(5),
             'setting' => $setting,
-            'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+            'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
         ];
         return view('find-a-job', compact('data'));
     }
@@ -409,7 +409,7 @@ class JobController extends Controller
                 'feedbacks' => $feedbacks,
                 'vacancy' => $vacancy,
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
             return view('job-feedbacks', compact('data'));
         }

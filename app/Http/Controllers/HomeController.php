@@ -23,7 +23,7 @@ class HomeController extends Controller
                 'candidates' => Candidate::count(),
                 'jobs' => Vacancy::orderBy('id', 'desc')->where('is_published', true)->limit(5)->get(),
                 'setting' => $setting,
-                'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
+                'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
             ];
         } else {
             $data = [

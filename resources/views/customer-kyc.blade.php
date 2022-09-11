@@ -118,5 +118,4 @@
         </div>
     </div>
 
-    {{-- @include('partials.newsletter') --}}
 @endsection

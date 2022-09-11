@@ -24,7 +24,7 @@ class ProfileController extends Controller
             'logo' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('logosize') : 'default.jpg',
             'favicon' => optional($setting)->getFirstMedia() ? $setting->getFirstMedia()->getUrl('favicon') : 'favicon.jpg',
             'setting' => $setting,
-            'initial_count' => auth()->user()->role->name == 'customer' ? Application::whereIn('vacancy_id',Vacancy::where('customer_id',auth()->user()->customer->id)->pluck('id'))->count() : 0
+            'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id',Vacancy::where('customer_id',auth()->user()->customer->id)->pluck('id'))->count() : 0
         ];
         if ($user->role->name == 'customer') {
             $profile = [
