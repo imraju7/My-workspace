@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -142,5 +143,7 @@ Route::middleware(['auth', 'verified', 'banned'])->group(function () {
 });
 
 Route::post('subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
+
 
 Route::get('test', [SubscriptionController::class, 'test']);

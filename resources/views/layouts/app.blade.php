@@ -35,14 +35,11 @@
 
 <body>
 
-    {{-- includes here --}}
     @include('partials.nav')
 
     @yield('content')
 
-    @guest
-        @include('partials.newsletter')
-    @endguest
+    @include('partials.newsletter')
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
         <div class="container">
@@ -85,16 +82,12 @@
         </div>
     </footer>
 
-
-
-    <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
                 stroke="#eeeeee" />
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
                 stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
-
 
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery-migrate-3.0.1.min.js') }}"></script>
@@ -143,7 +136,7 @@
 
     @customer
         <script type="text/javascript">
-            var initial_count = {{$data['initial_count']}};
+            var initial_count = {{ $data['initial_count'] }};
 
             function ajaxCallBack(data) {
                 initial_count = data;
@@ -155,18 +148,18 @@
                     url: '{{ route('count-applications', auth()->user()->customer->id ?? '') }}',
                     type: 'GET',
                     success: function(data) {
-                        console.log('Initial count '+this.initial_count);
+                        console.log('Initial count ' + this.initial_count);
                         if (data > this.initial_count) {
                             ajaxCallBack(data);
                             console.log('after callback')
-                                var message = "New Application";
-                                console.log('message');
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "showDuration": "1000",
-                                }
-                                toastr.warning(message);
-                            console.log('response '+data);
+                            var message = "New Application";
+                            console.log('message');
+                            toastr.options = {
+                                "closeButton": true,
+                                "showDuration": "1000",
+                            }
+                            toastr.warning(message);
+                            console.log('response ' + data);
                         }
                     }
                 });
