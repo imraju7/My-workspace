@@ -16,14 +16,22 @@
                             <div class="col-md-12 ftco-animate">
                                 <div class="job-post-item py-4 d-block d-lg-flex align-items-center">
                                     <div class="one-third mb-4 mb-md-0">
-                                        <div class="job-post-item-header d-flex align-items-center">
-                                            <img class="p-1" width="50px" height="50px" src="{{ $candidate->user->getFirstMediaUrl('avatar', 'thumb') }}">
-                                            <h2 class="mr-3 text-black">{{ ucWords($candidate->user->name) }}
-                                            </h2>
+                                        <div class="d-flex align-items-center">
+                                            <img class="p-1" width="50px" height="50px"
+                                                src="{{ $candidate->user->getFirstMediaUrl('avatar', 'thumb') }}">
+                                            <div class="mr-3">
+                                                <h2 class="text-black">{{ ucWords($candidate->user->name) }}
+                                                </h2>
+                                            </div>
+                                            <div style="font-weight:bold;">SKILLS : {{ strtoupper($candidate->skills) }}
+                                            </div>
                                         </div>
                                         <div class="job-post-item-body d-block d-md-flex">
-                                            <div><span class="icon-my_location"></span>
+                                            <div class="mr-2"><span class="icon-my_location"></span>
                                                 <span>{{ ucWords($candidate->address) }}</span>
+                                            </div>
+                                            <div style="font-weight:bold;">
+                                                QUALIFICATIONS : {{ strtoupper($candidate->educational_qualifications) }}
                                             </div>
                                         </div>
                                     </div>
