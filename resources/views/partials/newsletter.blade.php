@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-                    <h2>Subcribe to our Newsletter</h2>
+                    <h2>Subscribe to our Newsletter</h2>
                     <p>Get the lastest information about new jobs popping accross the world</p>
                     <div class="row d-flex justify-content-center mt-4 mb-4">
                         <div class="col-md-12">

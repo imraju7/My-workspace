@@ -57,6 +57,12 @@
                     <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
                         <a href="{{ route('profile') }}" class="nav-link ">Profile</a>
                     </li>
+                    <li class=" nav-item active">
+                        @inject('conversation', 'App\Models\Conversation')
+                        <a @disabled(true) class="nav-link "><span class="icon-message"
+                                title="Messages"></span>
+                            {{ $conversation->where('initiated_by', auth()->user()->id)->where('is_read', 0)->count() }}</a>
+                    </li>
                     <li class="nav-item cta cta-colored mr-md-1"><a href="{{ route('jobs.post') }}" class="nav-link">Post a
                             Job</a>
                     </li>

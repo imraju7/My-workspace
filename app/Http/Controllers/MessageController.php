@@ -19,6 +19,8 @@ class MessageController extends Controller
                 $application = Application::with(['vacancy', 'user'])->findOrFail($applicant_id);
                 $conversation = Conversation::with('message')->where('initiated_by', $job->company->user->id)
                     ->where('initiated_towards', $application->user->id)->first();
+                $conversation->is_read = true;
+                $conversation->save();
                 $setting = Setting::first();
                 $data = [
                     'pageTitle' => 'Message',
@@ -28,7 +30,7 @@ class MessageController extends Controller
                     'application' => $application,
                     'conversation' => $conversation,
                     'job' => $job,
-                    'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id',Vacancy::where('customer_id',auth()->user()->customer->id)->pluck('id'))->count() : 0
+                    'initial_count' => auth()->user()->customer ? Application::whereIn('vacancy_id', Vacancy::where('customer_id', auth()->user()->customer->id)->pluck('id'))->count() : 0
                 ];
                 return view('customer-messages', compact('data'));
             }
@@ -47,14 +49,17 @@ class MessageController extends Controller
         $conversation = Conversation::firstOrCreate([
             'topic' => 'Conversation with Applicants',
             'initiated_by' => $job->company->user->id,
-            'initiated_towards' => $application->user->id
+            'initiated_towards' => $application->user->id,
         ]);
+
+        $conversation->is_read = true;
+        $conversation->save();
 
         Message::create([
             'conversation_id' => $conversation->id,
             'sender' => $conversation->initiated_by,
             'receiver' => $conversation->initiated_towards,
-            'message' => $request->message
+            'message' => $request->message,
         ]);
 
         return redirect()->back()->with('success', 'Message sent successfully.');
@@ -94,11 +99,14 @@ class MessageController extends Controller
 
         $conversation = Conversation::findOrFail($request->conversation_id);
 
+        $conversation->is_read = false;
+        $conversation->save();
+
         Message::create([
             'conversation_id' => $conversation->id,
             'sender' => $conversation->initiated_towards,
             'receiver' => $conversation->initiated_by,
-            'message' => $request->message
+            'message' => $request->message,
         ]);
 
         return redirect()->back()->with('success', 'Message sent successfully.');
